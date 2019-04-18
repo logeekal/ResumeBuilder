@@ -1,0 +1,73 @@
+    @import url(https://fonts.googleapis.com/css?family=Ubuntu);
+
+    .CVHeader{
+        background-color: white;
+        width: 90%;
+        display :flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .CVHeader::after{
+        margin-bottom: 4px;
+        border:5px solid red;
+    }
+    .CVHeaderLeft{
+        max-width:40%;
+        /* display:flex;*/
+        flex-direction: column; 
+        display:flex;
+        text-align: left;
+        align-content: space-around;
+        flex:1 1 40%;
+        margin-top: 2px;
+        list-style: none;
+    }
+
+    .CVHeaderLeft:first-child{
+        margin-top: 20px;
+
+    }
+
+    .CVHeaderLeft *{
+        font-family: 'Ubuntu';
+    }
+
+    .CVHeaderLeft__name{
+        font-family: 'Ubuntu';
+        color:rgb(63, 62, 62);
+        font-size: 2.3rem;
+        padding: 0;
+
+    }
+
+    .CVHeaderLeft__title{
+        color:rgba(54, 83, 211, 0.788);
+        font-size: 1.3rem;
+        font-family: 'Ubuntu';
+        font-weight: normal;    
+    }
+
+    .CVHeaderLeft__summary{
+        border: 1px solid red;
+        text-align:left;
+        padding:0;
+        font-weight: normal;
+        font-size: 1rem;
+    }
+
+    .CVHeaderLeft__mid{
+        display: flex;
+        align-items: center;
+        flex-grow: 0;
+    }
+    .CVHeaderLeft__mid img{
+        border-radius: 50%;
+        width: 100px;
+        border:3px solid rgb(98, 98, 236);
+
+    }
+
+    .CVHeaderRight{
+        flex-grow: 1;
+    }

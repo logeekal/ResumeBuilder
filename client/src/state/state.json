@@ -1,0 +1,50 @@
+{
+  "activeUser": {},
+  "loggedUserInfo": {},
+  "socialAllowed": {
+    "github": { "name": "Github", "url": "./github.png" },
+    "stack": { "name": "Stack OverFlow", "url": "./stack.png" },
+    "linkedIn": { "name": "LinkedIn", "url": "./linkedin.png" }
+  },
+  "fields": {
+    "personalInfo": {
+      "name": {},
+      "address": {
+        "add1": { "name": "Address 1", "value": "Delhi" },
+        "state": {},
+        "country": {},
+        "add2": { "name": "Address 2", "value": "Delhi" }
+      },
+      "contact": { "phone": "", "email": {} }
+    },
+    "socialProfiles": {},
+    "contactsInfo": {},
+    "title": {},
+    "summary": {},
+    "skills": [{ "npm": { "rating": "4" } }],
+    "allWorkEx": [
+      {
+        "workEx": {
+          "title": {},
+          "role": {},
+          "company": {},
+          "startDate": {},
+          "endDate": {},
+          "roleDetails": {}
+        }
+      }
+    ],
+    "education": {
+      "degreeName": {},
+      "collegeName": {},
+      "country": {},
+      "courses": {}
+    },
+    "Projects": {
+      "projectTitle": {},
+      "projectDescription": {},
+      "whitePaperURL": {}
+    }
+  },
+  "allSkills": {}
+}
