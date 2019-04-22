@@ -42,11 +42,19 @@ export  function genPersonalInfo(){
         }
 }
 
-export   function genSummary(){
+export  function genSummary(){
     // return {
     //     "summary": txtgen.paragraph(3)
     // }
     return txtgen.paragraph(3);
+}
+
+export function genFieldList(){
+    return {
+        "name" : {
+            "editMode" :false
+        }
+    }
 }
 
 
@@ -54,4 +62,6 @@ export  function genTitle (){
     return  faker.name.jobTitle();
 }
 
-
+export function genLoginInfo(){
+    return "SignIn"
+}
