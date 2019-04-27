@@ -1,4 +1,11 @@
-import { EDIT_FIELD, UPDATE_FIELD, UPDATE_LOGIN_INFO, UPDATE_PERSONAL_INFO } from '../action-type';
+import {
+    EDIT_FIELD,
+    UPDATE_FIELD,
+    UPDATE_LOGIN_INFO,
+    UPDATE_PERSONAL_INFO,
+    ADD_NEW_PROFILE_SUBSECTION,
+    UPDATE_CATEGORY_PROP
+} from '../action-type';
 
 export const editField = fieldName => {
     console.log(`Dispatcing action Edit field for ${fieldName}`);
@@ -18,4 +25,14 @@ export const updateLoginInfo = value => {
 
 export const handlePersonalInfo=value =>{
     return {type : UPDATE_PERSONAL_INFO, payload : value}
+}
+
+export const addNewProfileSubsection = (category) =>{
+    return {type:ADD_NEW_PROFILE_SUBSECTION, payload: category};
+}
+
+
+export const updateCategoryProp = (category, property,value) =>{
+    return {type:UPDATE_CATEGORY_PROP, payload : {category, property, value}};
+
 }

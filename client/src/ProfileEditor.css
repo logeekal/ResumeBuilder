@@ -1,0 +1,40 @@
+.profile ul{
+    display:flex;
+    width: 60%;
+    height: 100vh;
+    justify-items: center;
+    flex-direction: column;
+}
+
+
+hr.sectiondivider{
+    margin-top:40px;
+    height: 2px;
+    border:0;
+    box-shadow: 0 10px 10px -10px #8c8b8b inset;
+}
+
+.headers{
+    cursor: pointer;
+    background-color: rgb(214, 210, 210);
+    align-content: flex-start
+}
+
+.headers:hover{
+    cursor: pointer;
+    background-color: rgb(151, 148, 148);
+}
+
+.subsection.expanded{
+
+   display: block;
+   transition: 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+
+
+
+.subsection.collapsed{
+
+    display: none;
+ }

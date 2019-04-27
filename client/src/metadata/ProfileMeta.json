@@ -1,0 +1,98 @@
+{
+    "personalInfo": {
+        "name": "Personal Info",
+        "id"  : "personalInfo",
+        "multi" : false,
+        "children": {
+            "0": {
+                "name": "name",
+                "type": "text",
+                "maxLength": 20,
+                "value": "",
+                "label": "Name"
+            },
+            "1": {
+                "name": "add1",
+                "type": "text",
+                "maxLength": 100,
+                "value": "",
+                "label": "Street Address"
+            },
+            "2": {
+                "name": "add2",
+                "type": "text",
+                "maxLength": 100,
+                "value": "",
+                "label": "Address"
+            },
+            "3": {
+                "name": "state",
+                "type": "text",
+                "maxLength": 100,
+                "value": "",
+                "label": "State/City"
+            },
+            "4": {
+                "name": "country",
+                "type": "text",
+                "maxLength": 100,
+                "value": "",
+                "label": "Country"
+            },
+            "5": {
+                "name": "phone",
+                "type": "tel",
+                "maxLength": 10,
+                "value": "",
+                "label": "Phone"
+            },
+            "6": {
+                "name": "email",
+                "type": "email",
+                "maxLength": 50,
+                "value": "",
+                "label": "Email"
+            }
+        }
+    },
+
+    "education" :{
+        "name" : "Education Summary",
+        "id"   :"education",
+        "multi" : true,
+        "children" : {
+            "0" : {
+                "name": "school",
+                "type": "text",
+                "maxLength": 50,
+                "value": "",
+                "label": "School",
+                "multi" : false
+            },
+            "1" : {
+                "name": "qualification",
+                "type": "text",
+                "maxLength": 50,
+                "value": "",
+                "label": "Qualification",
+                "multi" : false
+            },
+            "2" : {
+                "name": "gpa",
+                "type": "text",
+                "maxLength": 50,
+                "value": "",
+                "label": "GPA",
+                "multi" : false
+            },
+            "3" : {
+                "name": "courses",
+                "type": "text",
+                "maxLength": 50,
+                "value": "",
+                "label": "Courses",
+                "multi" : true
+            }
+        }
+    }
+}

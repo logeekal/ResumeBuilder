@@ -1,3 +1,4 @@
+import ProfileMeta from '../metadata/ProfileMeta.json';
 const shortid = require("shortid"); // shortid.generate() returns a unique "short" id
 const txtgen = require("txtgen"); // txtgen.sentence() returns random "readable" sentences
 const faker = require("faker"); // faker is used for generating random fake data.
@@ -33,13 +34,37 @@ function genContactInfo(){
 
 export  function genPersonalInfo(){
     return {
-            "fname" : faker.name.firstName(),
-            "lname" : faker.name.lastName(),
+            "name" : faker.name.firstName() + ' ' + faker.name.lastName(),
             "id" : shortid.generate(),
             "profilePic" : faker.image.avatar(),
-            "address" : genAddress(),
-            "contact" : genContactInfo()
+            "add1" : faker.address.streetAddress(false),
+            "add2" : faker.address.secondaryAddress(),
+            "state" : faker.address.state(),
+            "country" : faker.address.country(),
+            "count"   : 1,
+            "visible" : true
+
         }
+}
+
+
+export function genEducation(){
+    var educationMeta = ProfileMeta.education;
+    var result ={};
+    var details = {};
+    var detailObject = {};
+    var fieldValList = [];
+    _.values(educationMeta.children).map((field, index) => {
+        if(field.multi){
+            detailObject[field.name]= fieldValList;
+        }
+        detailObject[field.name] ="abc";
+    })
+    details[0] = detailObject;
+    result.count = 1;
+    result.details= details;
+    result.visible= true;
+    return result;
 }
 
 export  function genSummary(){
