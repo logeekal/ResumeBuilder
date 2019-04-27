@@ -1,3 +1,5 @@
+Checkout Dev branch for latest changes.
+
 # ResumeBuilder
 An Open Source Resume Builder Platform
 
