@@ -1,61 +1,126 @@
 import React from "react";
 import "./ProfileEditor.css";
 import { store } from "./state";
-import { handlePersonalInfo, addNewProfileSubsection, updateCategoryProp } from './actions';
+import {
+  handlePersonalInfo,
+  addNewProfileSubsection,
+  updateCategoryProp
+} from "./actions";
 import _ from "lodash";
 import ProfileMeta from "./metadata/ProfileMeta.json";
-import './ProfileEditor.css';
+import "./ProfileEditor.css";
 
-export class AddControl extends React.Component{
-  constructor(props){
+/**
+ * AddControl Component :  I am not even sure if it should be a component.
+ * It is just a link which adds new subsection under a particular sub-section, wherever
+ * this particular linkis provided.
+ *
+ *
+ */
+export class AddControl extends React.Component {
+  constructor(props) {
     super(props);
     this.section = props.section;
   }
 
-  handleAddNew(category){
-    store.dispatch(addNewProfileSubsection(this.section.id))
+  handleAddNew(category) {
+    /**
+     * We dispatch the action and letting the action and reducer know which section
+     * or part of the page we want to ADD the row for. It may be section or subsection and that is what
+     * level represents as second params.
+     */
+    store.dispatch(
+      addNewProfileSubsection(this.section.id, this.section.level)
+    );
   }
 
   render() {
     if (this.props.section.multi == true) {
       return (
         <div>
-          <span className="addcontrol" onClick={this.handleAddNew.bind(this, this.props.section.id)}>Add New {this.props.section.name}</span>
+          <span
+            className="addcontrol"
+            onClick={this.handleAddNew.bind(this, this.props.section.id)}
+          >
+            Add New {this.props.section.name}
+          </span>
         </div>
       );
     } else {
-      return <span></span>;
+      return <span />;
     }
   }
 }
 
+/**
+ *
+ * What is a Subsection?
+ * ==>
+ * Looking at the ProfileMeta.json. Sub-Section is the collection of all the fields that grouped in heading.
+ * For example :  Collection of Name , address, Country represents a subsection under section personalInfo.
+ * SubSection parent component is a Section which calles all subsections under it.
+ * For example :  Personal Info is one of the section.
+ *
+ * Number of occurences of a subsections. For example number of Education experiences depends on the count in the state.
+ *
+ * @props Section The section for which this subsection belongs. It can personalInfo, Subsection, etc.
+ * @props Counter Counter of that section. This helpful to mark each subsection accroding to its position in
+ *                the array in state.
+ */
 export class SubSection extends React.Component {
   constructor() {
     super();
   }
 
-  handleProfileChange(e) {
-    store.dispatch(updateCategoryProp(e.target.dataset.category,e.target.dataset.name,e.target.value));
+  handleProfileChange(section, field, e) {
+    e.persist();
+    e.preventDefault();
+    console.log(e)
+    store.dispatch(
+      updateCategoryProp(
+        section, //section name
+        field, //field name
+        e//the exact element that is being update
+      )
+    );
   }
+
+
 
   render() {
     var section = this.props.section;
     var cat = this.props.category;
+
     return (
-      <div className={"subsection" +" "+ (store.getState()[section.id].visible ? 'expanded' : 'collapsed')}>
-        {_.values(section.children).map(feild => (
+      <div
+        className={
+          "subsection" +
+          " " +
+          (store.getState()[section.id].visible ? "expanded" : "collapsed")
+        }
+      >
+        {_.values(section.children).map(field => (
           <li>
-            <label htmlFor={feild.name}>{feild.label}</label>
+            <label htmlFor={field.name}>{field.label}</label>
             <input
-              className={feild.type}
-              type={feild.type}
-              ref={feild.name}
+              className={field.type}
+              type={field.type}
+              ref={field.name}
+              data-counter={this.props.counter}
               data-category={cat}
-              data-name={feild.name}
-              name={feild.name}
-              maxLength={feild.maxLength}
-              value={store.getState()[cat][feild.name]}
-              onChange={this.handleProfileChange}
+              data-name={field.name}
+              name={field.name}
+              maxLength={field.maxLength}
+              value={
+                field.multi
+                  ? section.multi
+                    ? store.getState()[section.id].details[this.props.counter][field.name]
+                    : store.getState()[section.id][field.name]
+                  : section.multi
+                  ? store.getState()[section.id].details[this.props.counter][field.name]
+                  : store.getState()[section.id][field.name]
+              }
+              onChange={this.handleProfileChange.bind(this,section,field)}
             />
           </li>
         ))}
@@ -75,13 +140,13 @@ export class Section extends React.Component {
   //   }
   // }
 
-  getAllSubsections(section){
+  getAllSubsections(section) {
     var state = store.getState();
     console.log("in get all subsections");
-    var subsectionArray= [];
-    for(var count=0; count< state[section.id].count; count++ ){
+    var subsectionArray = [];
+    for (var count = 0; count < state[section.id].count; count++) {
       subsectionArray.push(
-      <SubSection section={section} category={section.id}/>
+        <SubSection section={section} category={section.id} counter={count} />
       );
     }
     console.log("printing subsection Array");
@@ -89,28 +154,47 @@ export class Section extends React.Component {
     return subsectionArray;
   }
 
-  componentDidMount(){
-    console.log(`Height in didmount for section ${this.props.section.name} is ${this.refs[this.props.section.id].clientHeight}`)
+  componentDidMount() {
+    console.log(
+      `Height in didmount for section ${this.props.section.name} is ${
+        this.refs[this.props.section.id].clientHeight
+      }`
+    );
   }
 
-  
-  componentDidUpdate(){
-    console.log(`Height in didupdate for section ${this.props.section.name} is ${this.refs[this.props.section.id].clientHeight}`)
+  componentDidUpdate() {
+    console.log(
+      `Height in didupdate for section ${this.props.section.name} is ${
+        this.refs[this.props.section.id].clientHeight
+      }`
+    );
   }
 
-  handleSectionVisibiliy(section,e){
+  handleSectionVisibiliy(section, e) {
     var category = e.target.dataset.section;
-    store.dispatch(updateCategoryProp(category, "visible", !store.getState()[category].visible));
+    store.dispatch(
+      updateCategoryProp(
+        category,
+        "visible",
+        !store.getState()[category].visible
+      )
+    );
   }
-  
+
   render() {
     var section = this.props.section;
     var state = store.getState();
     return (
       <div className="sectionparent" ref={section.id}>
         <hr className="sectiondivider" />
-        <h2 className="headers" data-section={section.id} onClick={this.handleSectionVisibiliy.bind(this,section)} >{section.name}</h2>
-        <AddControl section={section} />        
+        <h2
+          className="headers"
+          data-section={section.id}
+          onClick={this.handleSectionVisibiliy.bind(this, section)}
+        >
+          {section.name}
+        </h2>
+        <AddControl section={section} />
         {this.getAllSubsections(section)}
       </div>
     );

@@ -27,12 +27,14 @@ export const handlePersonalInfo=value =>{
     return {type : UPDATE_PERSONAL_INFO, payload : value}
 }
 
-export const addNewProfileSubsection = (category) =>{
-    return {type:ADD_NEW_PROFILE_SUBSECTION, payload: category};
+export const addNewProfileSubsection = (section, level) =>{
+    return {type:ADD_NEW_PROFILE_SUBSECTION, payload: {section,level}};
 }
 
 
-export const updateCategoryProp = (category, property,value) =>{
-    return {type:UPDATE_CATEGORY_PROP, payload : {category, property, value}};
+export const updateCategoryProp = (section, field,element) =>{
+    //let element = JSON.parse(elementInString);
+
+    return {type:UPDATE_CATEGORY_PROP, payload : {section, field, element}};
 
 }
