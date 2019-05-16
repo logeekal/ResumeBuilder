@@ -105,7 +105,80 @@
                 "level": "subsection",
                 "label": "Courses",
                 "multi" : true
+            },
+            "4" : {
+                "name": "startDate",
+                "type": "month",
+                "maxLength": "",
+                "value": "",
+                "level": "subsection",
+                "label": "Start Date",
+                "multi" : false
+            },
+            "5" : {
+                "name": "endDate",
+                "type": "month",
+                "maxLength": "",
+                "value": "",
+                "level": "subsection",
+                "label": "End Date",
+                "multi" : false
             }
+        }
+    },
+    "experience" :{
+        "name" : "Experience Summary",
+        "id"   :"experience",
+        "level"  :"section",
+        "multi" : true,
+        "children" : {
+            "0" : {
+                "name": "title",
+                "type": "text",
+                "maxLength": 50,
+                "value": "",
+                "label": "Title/Position",
+                "level": "subsection",
+                "multi" : false
+            },
+            "1" : {
+                "name": "startDate",
+                "type": "month",
+                "maxLength": 50,
+                "value": "",
+                "label": "Start Date",
+                "level": "subsection",
+                "multi" : false
+            },
+            "2" : {
+                "name": "endDate",
+                "type": "month",
+                "maxLength": 50,
+                "value": "",
+                "label": "End date",
+                "level": "subsection",
+                "multi" : false
+            },
+            "3" : { 
+                "name": "company",
+                "type": "text",
+                "maxLength": 50,
+                "value": "",
+                "level": "subsection",
+                "label": "Company Name",
+                "multi" : true
+
+            },
+            "4" : {
+                "name": "highlights",
+                "type": "text",
+                "maxLength": 50,
+                "value": "",
+                "level": "subsection",
+                "label": "Highlights",
+                "multi" : true
+            }
+            
         }
     }
 }

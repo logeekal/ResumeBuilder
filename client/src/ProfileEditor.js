@@ -2,10 +2,11 @@ import React from "react";
 import "./ProfileEditor.css";
 import { store } from "./state";
 import {
-  handlePersonalInfo,
-  addNewProfileSubsection,
-  updateCategoryProp
-} from "./actions";
+    handlePersonalInfo,
+    addNewProfileSubsection,
+    updateCategoryProp,
+    addNewFieldRow
+} from './actions';
 import _ from "lodash";
 import ProfileMeta from "./metadata/ProfileMeta.json";
 import "./ProfileEditor.css";
@@ -86,10 +87,88 @@ export class SubSection extends React.Component {
   }
 
 
+  handleAddNewFieldRow(section, field, e) {
+    store.dispatch(
+      addNewFieldRow(
+        section.id,
+        this.props.counter,
+        field)
+      );
+  } 
+
+
+  getFieldsComponent(section,field){
+    let fieldsComponent = [];
+    let fieldCount;
+
+    /**
+     * Counting the number of lines for field that are multi.
+     * In case a filed is not multi, it should be displayed with atleast 1 count.
+     * 
+     *  */
+    if(field.multi)
+      fieldCount = _.keys(store.getState()[section.id].details[this.props.counter][field.name]).length;
+    else{
+      fieldCount = 1
+    }
+    for(let fieldIdx =0 ; fieldIdx < fieldCount; fieldIdx++){
+      if(fieldIdx == 0 ){
+        /***
+         * Because labels of multi field should come only once.
+         * 
+         */
+        fieldsComponent.push(<label htmlFor={field.name}>{field.label}</label>);
+      }
+      try{
+        fieldsComponent.push(
+          <input
+                className={`${field.type} ${field.level}${field.multi?'-multi':""}`}
+                id={field.name}
+                type={field.type}
+                ref={field.name}
+                data-sectioncounter={this.props.counter}
+                data-fieldcounter={fieldIdx}
+                data-category={this.props.category}
+                data-name={field.name}
+                name={field.name}
+                maxLength={field.maxLength}
+                value={
+                  field.multi
+                    ? section.multi
+                      ? store.getState()[section.id].details[this.props.counter][field.name][fieldIdx]
+                      : store.getState()[section.id][field.name][fieldIdx]
+                    : section.multi
+                      ? store.getState()[section.id].details[this.props.counter][field.name]
+                      : store.getState()[section.id][field.name]
+                }
+                onChange={this.handleProfileChange.bind(this,section,field)}
+          />
+        );
+        
+        if(fieldIdx === fieldCount-1) {
+          fieldsComponent.push(field.multi ? <span className={`${field.level}-add clicky`} onClick={this.handleAddNewFieldRow.bind(this,section,field)}>&#8853;</span> : null);
+        }
+        
+
+    }catch(e){
+      console.log(`Caught the issue===============================`);
+      console.log(e);
+      console.log(section);
+      console.log(field);
+      console.log(this.props.counter);
+      console.log(store.getState());
+      console.log(`Caught the issue===============================`);
+    }
+    
+  }
+  return fieldsComponent;
+}
+
 
   render() {
     var section = this.props.section;
     var cat = this.props.category;
+    let fieldCount;
 
     return (
       <div
@@ -101,27 +180,7 @@ export class SubSection extends React.Component {
       >
         {_.values(section.children).map(field => (
           <li>
-            <label htmlFor={field.name}>{field.label}</label>
-            <input
-              className={field.type}
-              type={field.type}
-              ref={field.name}
-              data-counter={this.props.counter}
-              data-category={cat}
-              data-name={field.name}
-              name={field.name}
-              maxLength={field.maxLength}
-              value={
-                field.multi
-                  ? section.multi
-                    ? store.getState()[section.id].details[this.props.counter][field.name]
-                    : store.getState()[section.id][field.name]
-                  : section.multi
-                  ? store.getState()[section.id].details[this.props.counter][field.name]
-                  : store.getState()[section.id][field.name]
-              }
-              onChange={this.handleProfileChange.bind(this,section,field)}
-            />
+            {this.getFieldsComponent(section,field)}
           </li>
         ))}
       </div>

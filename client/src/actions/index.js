@@ -4,7 +4,8 @@ import {
     UPDATE_LOGIN_INFO,
     UPDATE_PERSONAL_INFO,
     ADD_NEW_PROFILE_SUBSECTION,
-    UPDATE_CATEGORY_PROP
+    UPDATE_CATEGORY_PROP,
+    ADD_NEW_FIELD_ROW
 } from '../action-type';
 
 export const editField = fieldName => {
@@ -37,4 +38,19 @@ export const updateCategoryProp = (section, field,element) =>{
 
     return {type:UPDATE_CATEGORY_PROP, payload : {section, field, element}};
 
+}
+
+export const addNewFieldRow = (sectionId, sectionIdx,field) =>{
+    /***
+     * 
+     * Add New Field Row --> To locate a field we will need 
+     *  section Id --> To location which section
+     *  sectionIdx --> Section index - to locate which row of that subsection
+     *  fiedl       --> Which multi field is trying to add row.
+     * 
+     */
+    return {
+        type        :   ADD_NEW_FIELD_ROW,
+        payload     :   {sectionId, sectionIdx, field}
+    }
 }

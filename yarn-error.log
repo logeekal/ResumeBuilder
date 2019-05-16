@@ -1,0 +1,34 @@
+Arguments: 
+  C:\Jatin\pdh\Softwares\node\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add jest
+
+PATH: 
+  C:\Users\E9968575\AppData\Local\Continuum\anaconda3\Scripts;C:\Users\E9968575\AppData\Local\Continuum\anaconda3\;C:\app\E9968575\product\11.1.0\client1\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Java\jre6\bin\;C:\oraclexe\app\oracle\product\11.2.0\server\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\CheckPoint\Endpoint Security\Endpoint Common\bin;c:\Program Files\Microsoft SQL Server\110\Tools\Binn\;c:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\;c:\Program Files\Microsoft SQL Server\110\DTS\Binn\;c:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\;c:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files\1E\NomadBranch\;C:\Program Files (x86)\WebEx\Productivity Tools;C:\Program Files\PuTTY\;C:\Jatin\pdh\Softwares\node;C:\Jatin\pdh\Softwares\ngrok-stable-windows-amd64;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Geth;C:\Users\E9968575\AppData\Roaming\Dashlane\4.8.3.33797\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\E9968575\AppData\Roaming\Dashlane\4.8.3.33797\ucrt;C:\Users\E9968575\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\E9968575\AppData\Local\Programs\Git\cmd;C:\Users\E9968575\AppData\Local\Programs\Fiddler;C:\Users\E9968575\AppData\Local\Yarn\bin
+
+Yarn version: 
+  1.15.2
+
+Node version: 
+  10.15.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/jest: tunneling socket could not be established, cause=getaddrinfo ENOTFOUND proxy.etn.com proxy.etn.com:8080
+      at ClientRequest.onError (C:\Program Files (x86)\Yarn\lib\cli.js:141027:17)
+      at Object.onceWrapper (events.js:277:13)
+      at ClientRequest.emit (events.js:189:13)
+      at Socket.socketErrorListener (_http_client.js:392:9)
+      at Socket.emit (events.js:189:13)
+      at emitErrorNT (internal/streams/destroy.js:82:8)
+      at emitErrorAndCloseNT (internal/streams/destroy.js:50:3)
+      at process._tickCallback (internal/process/next_tick.js:63:19)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

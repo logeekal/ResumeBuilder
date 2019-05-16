@@ -53,12 +53,34 @@ export function genEducation(){
     var result ={};
     var details = {};
     var detailObject = {};
-    var fieldValList = [];
+    var fieldValList =  {"0":"abc"};
     _.values(educationMeta.children).map((field, index) => {
         if(field.multi){
             detailObject[field.name]= fieldValList;
+        }else{
+            detailObject[field.name] ="abc";
         }
+        
+    })
+    details[0] = detailObject;
+    result.count = 1;
+    result.details= details;
+    result.visible= true;
+    return result;
+}
+
+export function genExperience(){
+    var expMeta = ProfileMeta.experience;
+    var result ={};
+    var details = {};
+    var detailObject = {};
+    var fieldValList = {"0":'abc'};
+    _.values(expMeta.children).map((field, index) => {
+        if(field.multi){
+            detailObject[field.name]= fieldValList;
+        }else{
         detailObject[field.name] ="abc";
+        }
     })
     details[0] = detailObject;
     result.count = 1;
