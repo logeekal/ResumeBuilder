@@ -24,7 +24,7 @@
       "2": {
         "name": "add2",
         "type": "text",
-        "maxLength": 100,
+        "maxLength": 99,
         "value": "",
         "level": "subsection",
         "label": "Address"
