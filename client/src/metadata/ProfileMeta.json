@@ -1,0 +1,208 @@
+{
+  "personalInfo": {
+    "name": "Personal Info",
+    "id": "personalInfo",
+    "multi": false,
+    "level": "section",
+    "children": {
+      "0": {
+        "name": "name",
+        "type": "text",
+        "maxLength": 20,
+        "value": "",
+        "level": "subsection",
+        "label": "Name"
+      },
+      "1": {
+        "name": "add1",
+        "type": "text",
+        "maxLength": 100,
+        "value": "",
+        "level": "subsection",
+        "label": "Street Address"
+      },
+      "2": {
+        "name": "add2",
+        "type": "text",
+        "maxLength": 99,
+        "value": "",
+        "level": "subsection",
+        "label": "Address"
+      },
+      "3": {
+        "name": "state",
+        "type": "text",
+        "maxLength": 100,
+        "value": "",
+        "level": "subsection",
+        "label": "State/City"
+      },
+      "4": {
+        "name": "country",
+        "type": "text",
+        "maxLength": 100,
+        "value": "",
+        "level": "subsection",
+        "label": "Country"
+      },
+      "5": {
+        "name": "phone",
+        "type": "tel",
+        "maxLength": 10,
+        "value": "",
+        "level": "subsection",
+        "label": "Phone"
+      },
+      "6": {
+        "name": "email",
+        "type": "email",
+        "maxLength": 50,
+        "value": "",
+        "level": "subsection",
+        "label": "Email"
+      }
+    }
+  },
+  "education": {
+    "name": "Education Summary",
+    "id": "education",
+    "level": "section",
+    "multi": true,
+    "children": {
+      "0": {
+        "name": "school",
+        "type": "text",
+        "maxLength": 50,
+        "value": "",
+        "label": "School",
+        "level": "subsection",
+        "multi": false
+      },
+      "1": {
+        "name": "qualification",
+        "type": "text",
+        "maxLength": 50,
+        "value": "",
+        "label": "Qualification",
+        "level": "subsection",
+        "multi": false
+      },
+      "2": {
+        "name": "gpa",
+        "type": "text",
+        "maxLength": 50,
+        "value": "",
+        "label": "GPA",
+        "level": "subsection",
+        "multi": false
+      },
+      "3": {
+        "name": "courses",
+        "type": "text",
+        "maxLength": 50,
+        "value": "",
+        "level": "subsection",
+        "label": "Courses",
+        "multi": true
+      },
+      "4": {
+        "name": "startDate",
+        "type": "month",
+        "maxLength": "",
+        "value": "",
+        "level": "subsection",
+        "label": "Start Date",
+        "multi": false
+      },
+      "5": {
+        "name": "endDate",
+        "type": "month",
+        "maxLength": "",
+        "value": "",
+        "level": "subsection",
+        "label": "End Date",
+        "multi": false
+      }
+    }
+  },
+  "experience": {
+    "name": "Experience Summary",
+    "id": "experience",
+    "level": "section",
+    "multi": true,
+    "children": {
+      "0": {
+        "name": "title",
+        "type": "text",
+        "maxLength": 50,
+        "value": "",
+        "label": "Title/Position",
+        "level": "subsection",
+        "multi": false
+      },
+      "1": {
+        "name": "startDate",
+        "type": "month",
+        "maxLength": 50,
+        "value": "",
+        "label": "Start Date",
+        "level": "subsection",
+        "multi": false
+      },
+      "2": {
+        "name": "endDate",
+        "type": "month",
+        "maxLength": 50,
+        "value": "",
+        "label": "End date",
+        "level": "subsection",
+        "multi": false
+      },
+      "3": {
+        "name": "company",
+        "type": "text",
+        "maxLength": 50,
+        "value": "",
+        "level": "subsection",
+        "label": "Company Name",
+        "multi": true
+      },
+      "4": {
+        "name": "highlights",
+        "type": "text",
+        "maxLength": 50,
+        "value": "",
+        "level": "subsection",
+        "label": "Highlights",
+        "multi": true
+      }
+    }
+  },
+  "skills": {
+    "name": "skills",
+    "type": "text",
+    "maxLength": 50,
+    "value": "",
+    "level": "section",
+    "label": "Skills",
+    "multi": true
+  },
+  "projects": {
+    "name": "projects",
+    "type": "text",
+    "maxLength": 50,
+    "value": "",
+    "level": "section",
+    "label": "Projects Undertaken",
+    "multi": true
+  },
+  "languages": {
+    "name": "languages",
+    "type": "text",
+    "maxLength": 50,
+    "value": "",
+    "level": "section",
+    "label": "Langauges/Tools",
+    "multi": true
+  }
+}

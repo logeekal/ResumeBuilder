@@ -1,10 +1,10 @@
-*{
+/* *{
   border : 1px solid red;
-}
+} */
 
 .App {
   text-align: center;
-  background-color: darkslategray;
+  background-color: white;
   height: 100%;
 }
 

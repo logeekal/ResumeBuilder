@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
+.register{
+    width: 500px;
+    min-height: 400px;
+    background-color: rgb(10, 10, 10);
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+}
+
+
+.register_ul{
+
+    list-style-type: none;
+    padding: 0px;
+    justify-items: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+
+.register_ul li{
+
+    margin: 0;
+}
+
+/* .register *{
+    border: 1px solid white;
+} */
+
+.register__form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    list-style-type: none;
+    align-items: center;
+    margin: 0px;
+    padding : 0px
+}
+
+.register__welcome{
+    color: White;
+    font-family: 'Ubuntu', sans-serif;
+    flex-wrap: wrap;
+}
+
+
+
+.register__form input{
+    outline:none;
+    border: 0;
+    padding:10px;
+    background-color: transparent;
+    border-bottom: 1px solid rgb(221, 217, 217);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color:white;
+}
+
+
+.register__form input::placeholder{
+color: rgb(221, 217, 217)
+}
+
+.register__form_submit{
+    padding:8px 16px;
+    border: none;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+@keyframes button_change{
+    25% {border-bottom : 2px solid red ; border-bottom-style: 10% }
+    50% {border-bottom : 2px solid red ; border-bottom-width: 10% }
+    75% {border-bottom : 2px solid red ; border-bottom-width: 10% }
+    100%{border-bottom : 2px solid red ; border-bottom-width: 10% }
+}
+
+.register__form_submit:hover{
+    /* text-decoration: underline;
+    animation-name: button_change;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    transition-timing-function: ease-out */
+    border-bottom: 2px solid red;
+    transition: border-bottom 2s ;
+}
