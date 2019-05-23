@@ -6,14 +6,17 @@ import loginInfo from './loginInfo';
 import education from './education';
 import experience from './experience';
 import {combineReducers} from 'redux';
+import { profileReducerFactory, profileReducer } from './profileReducerFactory';
+import { META_DEFS } from '../constants/config';
 
 
 export default combineReducers({
-    personalInfo,
     summary,
     title,
     fields,
     loginInfo,
-    education,
-    experience
+    [META_DEFS.PERSONALINFO] : profileReducerFactory(profileReducer, META_DEFS.PERSONALINFO),
+    [META_DEFS.EDUCATION] : profileReducerFactory(profileReducer, META_DEFS.EDUCATION),
+    [META_DEFS.EXPERIENCE] : profileReducerFactory(profileReducer, META_DEFS.EXPERIENCE),
+    [META_DEFS.OTHERDETAILS] : profileReducerFactory(profileReducer, META_DEFS.OTHERDETAILS),
 });

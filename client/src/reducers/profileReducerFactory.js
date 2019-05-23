@@ -4,15 +4,15 @@ import {
   UPDATE_CATEGORY_PROP,
   ADD_NEW_FIELD_ROW
 } from "../action-type";
-import { LEVEL_SECTION, META_DEFS } from "../constants/config";
+import { LEVEL_SECTION, META_DEFS, INITIAL_STATES } from '../constants/config';
 import _ from "lodash";
 
 /**
- * Makes sure write the parameters that will be coming in the each reducer
- * for every Case
+ * This is a profile reducer factory. Its job is generate the redecers for different profile sections.
+ * 
  */
 
-export default (state = genEducation(), action) => {
+export function profileReducer(state, action) {
   switch (action.type) {
     case ADD_NEW_PROFILE_SUBSECTION:
       /**
@@ -20,8 +20,7 @@ export default (state = genEducation(), action) => {
        * @param  payload
        */
       if (
-        action.payload.level == LEVEL_SECTION &&
-        action.payload.section === "education"
+        action.payload.level == LEVEL_SECTION
       ) {
         //get the original details from the state
         let details = state.details;
@@ -44,7 +43,7 @@ export default (state = genEducation(), action) => {
        * @payload     {sectionIdx}  Index of the subsection in the details property.
        * @payload     {field}         field for which a new row needs to be added.
        */
-      if (action.payload.sectionId == META_DEFS.EDUCATION) {
+      if (action.payload.sectionId == action.payload.sectionId) {
         let newFieldIdx =
           parseInt(
             _.max(
@@ -87,7 +86,7 @@ export default (state = genEducation(), action) => {
        *
        */
 
-      if (action.payload.section.id == META_DEFS.EDUCATION) {
+      if (action.payload.section.id == action.payload.section.id) {
         let e = action.payload.element;
 
         if (action.payload.section.multi) {
@@ -159,3 +158,22 @@ export default (state = genEducation(), action) => {
       return state;
   }
 };
+
+
+export function profileReducerFactory(reducerFunction, sentSection){
+    return (state, action) =>{
+        const {section} = action;
+        const isIntialState = state === undefined;
+        console.log(`Section ${sentSection}  State is : ${state}`);
+        if(isIntialState){
+            console.log(`this is an intial state.. initializing state for ${section}`);
+            return reducerFunction(INITIAL_STATES[sentSection],action);
+        }else{
+            if(sentSection !== section){
+                return state;
+            }else{
+                return reducerFunction(state,action);
+            }
+        }
+    }
+}

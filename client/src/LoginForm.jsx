@@ -25,7 +25,7 @@ export const LoginForm = () => {
           <h1 className="login__welcome">Not Yet Registered?</h1>
         </li>
         <li>
-          <a className="login__register" href="#" onClick={handleRegister}>Get Started</a>
+          <a className="login__register" id='LoginToRegister'  href="#" onClick={handleRegister.bind(this)}>Get Started</a>
         </li>
         <li>
           <form>
@@ -35,7 +35,7 @@ export const LoginForm = () => {
                   className="login__form_name"
                   type="text"
                 //   onFocus={this.placeholder.value=""}
-                  defaultPlaceholder="Your Email here."
+                  // defaultPlaceholder="Your Email here."
                 />
               </li>
               <li>

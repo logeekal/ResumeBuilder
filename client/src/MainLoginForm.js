@@ -6,9 +6,8 @@ import { RegisterForm } from './RegisterForm';
 import { loginInfo } from './constants/config';
 
 
-export class MainLoginForm extends React.Component{
 
-   
+export class MainLoginForm extends React.Component{
 
     constructor(props){
         super(props);

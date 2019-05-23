@@ -177,32 +177,42 @@
         "multi": true
       }
     }
-  },
-  "skills": {
-    "name": "skills",
-    "type": "text",
-    "maxLength": 50,
-    "value": "",
-    "level": "section",
-    "label": "Skills",
-    "multi": true
-  },
-  "projects": {
-    "name": "projects",
-    "type": "text",
-    "maxLength": 50,
-    "value": "",
-    "level": "section",
-    "label": "Projects Undertaken",
-    "multi": true
-  },
-  "languages": {
-    "name": "languages",
-    "type": "text",
-    "maxLength": 50,
-    "value": "",
-    "level": "section",
-    "label": "Langauges/Tools",
-    "multi": true
+  }
+  ,
+  
+  "otherDetails" : {
+    "name":"Other Details",
+    "id":"otherDetails",
+    "multi": false,
+    "level" : "section",
+    "children" :{
+      "0" : {
+        "name": "skills",
+        "type": "text",
+        "maxLength": 50,
+        "value": "",
+        "level": "subsection",
+        "label": "Skills",
+        "multi": true
+      },
+      "1" :{
+        "name": "projects",
+        "type": "text",
+        "maxLength": 50,
+        "value": "",
+        "level": "subsection",
+        "label": "Projects Undertaken",
+        "multi": true
+      },
+      "2":{
+        "name": "languages",
+        "type": "text",
+        "maxLength": 50,
+        "value": "",
+        "level": "subsection",
+        "label": "Langauges/Tools",
+        "multi": true
+      }
+    }
   }
 }

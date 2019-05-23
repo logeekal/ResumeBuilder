@@ -29,14 +29,14 @@ export const handlePersonalInfo=value =>{
 }
 
 export const addNewProfileSubsection = (section, level) =>{
-    return {type:ADD_NEW_PROFILE_SUBSECTION, payload: {section,level}};
+    return {type:ADD_NEW_PROFILE_SUBSECTION, payload: {section,level}, section:section};
 }
 
 
 export const updateCategoryProp = (section, field,element) =>{
     //let element = JSON.parse(elementInString);
 
-    return {type:UPDATE_CATEGORY_PROP, payload : {section, field, element}};
+    return {type:UPDATE_CATEGORY_PROP, payload : {section, field, element}, section: section.id};
 
 }
 
@@ -51,6 +51,7 @@ export const addNewFieldRow = (sectionId, sectionIdx,field) =>{
      */
     return {
         type        :   ADD_NEW_FIELD_ROW,
-        payload     :   {sectionId, sectionIdx, field}
+        payload     :   {sectionId, sectionIdx, field},
+        section     :   sectionId
     }
 }

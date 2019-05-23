@@ -1,8 +1,11 @@
-import ProfileMeta from '../metadata/ProfileMeta.json';
+import * as ProfileMeta from '../metadata/ProfileMeta.json';
+//import { META_DEFS } from '../constants/config';
 const shortid = require("shortid"); // shortid.generate() returns a unique "short" id
 const txtgen = require("txtgen"); // txtgen.sentence() returns random "readable" sentences
 const faker = require("faker"); // faker is used for generating random fake data.
 const _ = require("lodash"); // lodash is a utility lib for Javascript
+
+
 
 ////////////////////////////////////////////////////////
 ///             Start - Generating personal Infor
@@ -70,7 +73,7 @@ export function genEducation(){
 }
 
 export function genExperience(){
-    var expMeta = ProfileMeta.experience;
+    var expMeta =  ProfileMeta.experience;
     var result ={};
     var details = {};
     var detailObject = {};
@@ -88,6 +91,30 @@ export function genExperience(){
     result.visible= true;
     return result;
 }
+
+
+export function genOtherDetails(){
+    var expMeta = ProfileMeta.otherDetails;
+    var result ={};
+    var details = {};
+    var detailObject = {};
+    var fieldValList = {"0":'abc'};
+    _.values(expMeta.children).map((field, index) => {
+        if(field.multi){
+            detailObject[field.name]= fieldValList;
+        }else{
+        detailObject[field.name] ="abc";
+        }
+    })
+    details[0] = detailObject;
+    result.count = 1;
+    result.details= details;
+    result.visible= true;
+    return result;
+}
+
+
+
 
 export  function genSummary(){
     // return {

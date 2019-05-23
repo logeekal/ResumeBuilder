@@ -21,7 +21,7 @@ export class RegisterForm extends React.Component {
           <li>
             <h1 className="register__welcome">Already Registerd</h1>
             <br />
-            <a className="register__login" href="#" onClick={this.handleLogin}>
+            <a className="register__login" id="RegisterToLogin" href="#" onClick={this.handleLogin}>
               SignIn
             </a>
           </li>

@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Takes the snapshot 1`] = `
+<div
+  className="MainLoginForm"
+>
+  <div
+    className="login"
+  >
+    <ul
+      className="login_ul flex-container"
+    >
+      <li>
+        <h1
+          className="login__welcome"
+        >
+          Not Yet Registered?
+        </h1>
+      </li>
+      <li>
+        <a
+          className="login__register"
+          href="#"
+          id="LoginToRegister"
+          onClick={[Function]}
+        >
+          Get Started
+        </a>
+      </li>
+      <li>
+        <form>
+          <ul
+            className="login__form"
+          >
+            <li>
+              <input
+                className="login__form_name"
+                type="text"
+              />
+            </li>
+            <li>
+              <input
+                className="login__form_pass"
+                placeholder="Your password goes here"
+                type="password"
+              />
+            </li>
+            <li>
+              <button
+                className="login__form_submit"
+                type="submit"
+              >
+                Login
+              </button>
+            </li>
+          </ul>
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
