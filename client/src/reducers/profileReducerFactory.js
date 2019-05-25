@@ -90,10 +90,7 @@ export function profileReducer(state, action) {
       if (action.payload.section.id == action.payload.section.id) {
         let e = action.payload.element;
 
-        if (
-         // action.payload.section.multi
-         true
-          ) {
+   
           /***
            * This case handles if seciton is multi supported
            * Let us know handle
@@ -129,32 +126,6 @@ export function profileReducer(state, action) {
             };
           }
         } else {
-          /***
-           * This Else handles a situation whwere Section is not multi
-           * There will be 2 scenarios
-           *
-           * 1. Fields are multi
-           * 2. Field are non multi
-           *
-           */
-
-          if (action.payload.field.multi) {
-            let fieldIdx = e.target.dataset.fieldcounter;
-            return {
-              ...state,
-              [e.target.name]: {
-                ...state[e.target.name],
-                [fieldIdx]: e.target.value
-              }
-            };
-          } else {
-            return {
-              ...state,
-              [e.target.name]: e.target.value
-            };
-          }
-        }
-      } else {
         return state;
       }
       break;

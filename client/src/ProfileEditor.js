@@ -140,14 +140,8 @@ export class SubSection extends React.Component {
                 maxLength={field.maxLength}
                 value={
                   field.multi
-                    ? section.multi
-                      ? store.getState()[section.id].details[this.props.counter][field.name][fieldIdx]
-                      : store.getState()[section.id].details[this.props.counter][field.name][fieldIdx]
-                     // : store.getState()[section.id][field.name][fieldIdx]
-                    : section.multi
-                      ? store.getState()[section.id].details[this.props.counter][field.name]
-                      : store.getState()[section.id].details[this.props.counter][field.name]
-                //      : store.getState()[section.id][field.name]
+                    ? store.getState()[section.id].details[this.props.counter][field.name][fieldIdx]
+                    : store.getState()[section.id].details[this.props.counter][field.name]
                 }
                 onChange={this.handleProfileChange.bind(this,section,field)}
           />
