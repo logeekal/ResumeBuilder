@@ -8,6 +8,7 @@ const PORT = 9000;
 var app = require('../app');
 var debug = require('debug')('api:server');
 var http = require('http');
+const  { DBConnection } =  require('../utils/DBConnection');
 
 /**
  * Get port from environment and store in Express.
@@ -81,7 +82,7 @@ function onError(error) {
 /**
  * Event listener for HTTP server "listening" event.
  */
-
+DBConnection.connect();
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
