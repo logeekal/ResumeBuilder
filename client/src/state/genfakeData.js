@@ -35,7 +35,7 @@ function genContactInfo(){
 
 }
 
-export  function genPersonalInfo(){
+export  function genPersonalInfoOld(){
     return {
             "name" : faker.name.firstName() + ' ' + faker.name.lastName(),
             "id" : shortid.generate(),
@@ -48,6 +48,27 @@ export  function genPersonalInfo(){
             "visible" : true
 
         }
+}
+
+export function genPersonalInfo(){
+    var profileMeta = ProfileMeta.personalInfo;
+    var result ={};
+    var details = {};
+    var detailObject = {};
+    var fieldValList =  {"0":"abc"};
+    _.values(profileMeta.children).map((field, index) => {
+        if(field.multi){
+            detailObject[field.name]= fieldValList;
+        }else{
+            detailObject[field.name] ="abc";
+        }
+        
+    })
+    details[0] = detailObject;
+    result.count = 1;
+    result.details= details;
+    result.visible= true;
+    return result;
 }
 
 

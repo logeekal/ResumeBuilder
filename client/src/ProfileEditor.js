@@ -98,6 +98,7 @@ export class SubSection extends React.Component {
 
 
   getFieldsComponent(section,field){
+    
     let fieldsComponent = [];
     let fieldCount;
 
@@ -107,7 +108,12 @@ export class SubSection extends React.Component {
      * 
      *  */
     if(field.multi)
-      fieldCount = _.keys(store.getState()[section.id].details[this.props.counter][field.name]).length;
+      if(section.multi)
+        fieldCount = _.keys(store.getState()[section.id].details[this.props.counter][field.name]).length;
+      else{
+        fieldCount = _.keys(store.getState()[section.id].details[this.props.counter][field.name]).length;
+      }
+
     else{
       fieldCount = 1
     }
@@ -122,7 +128,7 @@ export class SubSection extends React.Component {
       try{
         fieldsComponent.push(
           <input
-                className={`${field.type} ${field.level}${field.multi?'-multi':""}`}
+                className={`${field.type} ${field.level} ${field.multi?'-multi':""}`}
                 id={field.name}
                 type={field.type}
                 ref={field.name}
@@ -136,10 +142,12 @@ export class SubSection extends React.Component {
                   field.multi
                     ? section.multi
                       ? store.getState()[section.id].details[this.props.counter][field.name][fieldIdx]
-                      : store.getState()[section.id][field.name][fieldIdx]
+                      : store.getState()[section.id].details[this.props.counter][field.name][fieldIdx]
+                     // : store.getState()[section.id][field.name][fieldIdx]
                     : section.multi
                       ? store.getState()[section.id].details[this.props.counter][field.name]
-                      : store.getState()[section.id][field.name]
+                      : store.getState()[section.id].details[this.props.counter][field.name]
+                //      : store.getState()[section.id][field.name]
                 }
                 onChange={this.handleProfileChange.bind(this,section,field)}
           />

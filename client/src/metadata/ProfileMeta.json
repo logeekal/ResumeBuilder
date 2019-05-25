@@ -169,7 +169,7 @@
       },
       "4": {
         "name": "highlights",
-        "type": "text",
+        "type": "textarea",
         "maxLength": 50,
         "value": "",
         "level": "subsection",
@@ -193,7 +193,7 @@
         "value": "",
         "level": "subsection",
         "label": "Skills",
-        "multi": true
+        "multi": false
       },
       "1" :{
         "name": "projects",

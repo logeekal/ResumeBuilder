@@ -25,7 +25,7 @@ export function profileReducer(state, action) {
         //get the original details from the state
         let details = state.details;
         let newIndex = parseInt(_.max(_.keys(details))) + 1;
-        details[newIndex] = genEducation().details["0"];
+        details[newIndex] = INITIAL_STATES[action.section].details["0"];
         return {
           ...state,
           count: state.count + 1,
@@ -44,6 +44,7 @@ export function profileReducer(state, action) {
        * @payload     {field}         field for which a new row needs to be added.
        */
       if (action.payload.sectionId == action.payload.sectionId) {
+        debugger
         let newFieldIdx =
           parseInt(
             _.max(
@@ -89,7 +90,10 @@ export function profileReducer(state, action) {
       if (action.payload.section.id == action.payload.section.id) {
         let e = action.payload.element;
 
-        if (action.payload.section.multi) {
+        if (
+         // action.payload.section.multi
+         true
+          ) {
           /***
            * This case handles if seciton is multi supported
            * Let us know handle
