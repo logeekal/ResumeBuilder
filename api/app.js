@@ -8,7 +8,7 @@ var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var testAPIRouter = require('./routes/testAPI');
+var apiRouter = require('./routes/api');
 
 
 
@@ -20,7 +20,7 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(cors());
-app.use("/testAPI", testAPIRouter);
+app.use("/api", apiRouter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

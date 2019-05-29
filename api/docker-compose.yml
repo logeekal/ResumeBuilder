@@ -1,15 +1,21 @@
 version: '3'
 services:
+
   mongo:
     image: mongo
     restart: always
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     environment:
       MONGO_INITDB_ROOT_USERNAME: "admin"
       MONGO_INITDB_ROOT_PASSWORD: "password"
     ports:
       - 27017:27017
     volumes:
+      - "./mongoEntry.js:/docker-entrypoint-initdb.d/mongoEntry.js:ro"
       - "mongoData:/data/db"
+
 
   mongo-express:
     image: mongo-express
@@ -20,5 +26,10 @@ services:
       ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
     ports:
       - 8081:8081
+    links: 
+      - mongo:mongo
+    depends_on: 
+      - mongo
+    
 volumes:
   mongoData:
