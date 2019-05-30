@@ -4,6 +4,12 @@ import { store } from "./state";
 import { updateLoginInfo } from "./actions";
 
 export class RegisterForm extends React.Component {
+
+constructor(){
+  super();
+  this.handleRegister = this.handleRegister.bind(this);
+}
+
   /**
    * handleLogin tells state that person wants to login and not signIn. This is a counter part of handleRegister in LoginForm component
    *
@@ -13,6 +19,22 @@ export class RegisterForm extends React.Component {
     e.preventDefault();
     store.dispatch(updateLoginInfo("SignIn"));
   };
+
+  async handleRegister(e){
+    console.log(this.refs)
+    let payload = {
+      email:this.refs.email.value,
+      password:this.refs.password.value
+    };
+    e.preventDefault();
+    await fetch("http://localhost:9000/api/user",{
+      method: 'POST',
+      headers :[ 
+        {"Content-Type" : "application/json"},
+      ],
+      body : payload
+    })
+  }
 
   render() {
     return (
@@ -26,12 +48,13 @@ export class RegisterForm extends React.Component {
             </a>
           </li>
           <li>
-            <form>
+            <form onSubmit={this.handleRegister}>
               <ul className="register__form">
                 <li>
                   <input
                     className="register__form_name"
                     type="text"
+                    ref="email"
                     //   onFocus={this.placeholder.value=""}
                     defaultPlaceholder="Your Email here."
                   />
@@ -40,6 +63,7 @@ export class RegisterForm extends React.Component {
                   <input
                     className="register__form_pass"
                     type="password"
+                    ref="pass"
                     placeholder="Your password goes here"
                   />
                 </li>
@@ -47,6 +71,7 @@ export class RegisterForm extends React.Component {
                   <input
                     className="register__form_confirmPass"
                     type="password"
+                    ref="confirmPass"
                     placeholder="Confirm password"
                   />
                 </li>
