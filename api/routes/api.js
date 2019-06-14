@@ -1,5 +1,8 @@
+const withAuth = require('../middlewares').withAuth;
+const resolveMongoError = require('../utils/MongoosErrorHandler').resolveMongoError;
 const { addUser, getUser } = require("../utils/DButils");
 const { User } = require("../models/users");
+
 
 express = require("express");
 
@@ -50,25 +53,62 @@ router.get("/users/:email", async function(req, res, next) {
 });
 
 router.post("/users/add", async (req, res, next) => {
-  console.log(req);
+  // console.log(req);
   try {
-    const { email, password } = req.body;
+    const { email, password, profile } = req.body;
 
-    const user = new User({ email, password });
+    const user = new User({ email, password, profile });
+
 
     user.save(err => {
-      if (err) {
-        res
-          .status(500)
-          .send(`Error registering the user. Error occured ${err}`);
-      } else {
+      console.log(typeof(err));
+      if (err instanceof Object && err.code === 11000) {
+        //User Already exists
+        res.status(406);
+        res.send(err.errmsg);
+        console.log(err.errmsg);
+      } else if(!err){
+        console.log(200);
         res.status(200).send(`Welcome to CV Builder.`);
+      }else{
+        throw err;
       }
     });
   } catch (err) {
-      console.log(err);
+    // console.log(err);
     res.status(500).send(`Some error occured`);
   }
 });
+
+
+router.post("/users/profile/get", withAuth, async(req, res, next)=>{
+  console.log(`Authenticated. Now getting the profile.`)
+
+  const email = req.body.email;
+  
+  let result = await User.findOne({email : email});
+  if(result === null){
+    res.sendStatus(404);
+  }
+  let profile = result.profile;
+  //removing Id field from the state
+  profile["_id"] = "NA";
+  res.status(200);
+  res.send(profile);
+});
+
+
+router.post("/users/profile/update", withAuth, async(req, res, next)=>{
+  const email = req.body.email;
+  const profile = req.body.profile;
+  const result = await User.updateOne({email:email}, {profile:profile},{upsert:false});
+  console.log(`${result.nModified} documents were updated`);
+  if(result.nModified > 0){
+    res.sendStatus(200);
+  }else{
+    res.sendStatus(404);h
+  }
+
+})
 
 module.exports = router;

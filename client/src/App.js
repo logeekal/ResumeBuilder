@@ -10,11 +10,11 @@ import './CVPage.css';
 import { Home } from './Home';
 import { LoginForm } from './LoginForm';
 import './RegisterForm.css';
-import { RegisterForm } from './RegisterForm';
+import  RegisterFormRouter  from './RegisterForm';
 import { SideNav } from './SideNav';
 import { ProfileEditor } from './ProfileEditor';
-
-
+import {withRouter} from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
 
 
 class App extends Component {
@@ -24,7 +24,7 @@ class App extends Component {
   }
 
   callAPI(){
-    fetch("http://localhost:9000/testAPI")
+    fetch("http://localhost:9000/")
       .then(res=>res.text())
       .then(res=> this.setState({apiResponse :res}))
       .catch(err=> err);
@@ -58,12 +58,15 @@ class App extends Component {
 
           {/*Custom Code Starts*/}
           <div>
-            <Route exact path="/" component={Home}/>
+            
+            <Route path="/profile" render={()=><ProtectedRoute ComponentToProtect={ProfileEditor} redirectTo="/" />} /> 
+            
+            <Route exact path="/" component={Home}/> 
             <Route exact path="/login" component={LoginForm}/>
-            <Route exact path="/register" component={RegisterForm}/>
+            <Route exact path="/register" component={RegisterFormRouter}/>
             <Route exact path='/home' component={MainPage}/>
             <Route exact path='/side' component={SideNav}/>
-            <Route exact path='/profile' component={ProfileEditor}/>
+            {/* <Route exact path='/profile' component={ProfileEditor}/> */}
 
           </div>
           {/* <PageHeader />
@@ -74,6 +77,7 @@ class App extends Component {
       </Router>
     );
   }
-}
+};
+
 
 export default App;

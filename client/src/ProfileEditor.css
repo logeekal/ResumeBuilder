@@ -1,7 +1,12 @@
+.profile{
+    display: flex;
+    flex-direction: column;
+}
+
 .profile ul{
     display:flex;
     width: 60%;
-    height: 100vh;
+
     justify-items: center;
     flex-direction: column;
 }
@@ -38,3 +43,4 @@ hr.sectiondivider{
 
     display: none;
  }
+

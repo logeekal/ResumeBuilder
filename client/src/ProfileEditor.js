@@ -2,14 +2,20 @@ import React from "react";
 import "./ProfileEditor.css";
 import { store } from "./state";
 import {
-    handlePersonalInfo,
-    addNewProfileSubsection,
-    updateCategoryProp,
-    addNewFieldRow
-} from './actions';
+  handlePersonalInfo,
+  addNewProfileSubsection,
+  updateCategoryProp,
+  addNewFieldRow,
+  updateCompleteProfile,
+  updateLoginInfo
+} from "./actions";
 import _ from "lodash";
 import ProfileMeta from "./metadata/ProfileMeta.json";
 import "./ProfileEditor.css";
+import { getProfile, genProfilePayload, saveProfile, uploadAvatar } from './utils/AuthReqs';
+import { UPDATE_CATEGORY_PROP } from "./action-type";
+import Avatar from "./components/Avatar";
+import { arrayBufferToBase64 } from "./utils/utility";
 
 /**
  * AddControl Component :  I am not even sure if it should be a component.
@@ -76,96 +82,107 @@ export class SubSection extends React.Component {
   handleProfileChange(section, field, e) {
     e.persist();
     e.preventDefault();
-    console.log(e)
+    console.log(e);
     store.dispatch(
       updateCategoryProp(
         section, //section name
         field, //field name
-        e//the exact element that is being update
+        e //the exact element that is being update
       )
     );
   }
 
-
   handleAddNewFieldRow(section, field, e) {
-    store.dispatch(
-      addNewFieldRow(
-        section.id,
-        this.props.counter,
-        field)
-      );
-  } 
+    store.dispatch(addNewFieldRow(section.id, this.props.counter, field));
+  }
 
-
-  getFieldsComponent(section,field){
-    
+  getFieldsComponent(section, field, index) {
     let fieldsComponent = [];
     let fieldCount;
 
     /**
      * Counting the number of lines for field that are multi.
      * In case a filed is not multi, it should be displayed with atleast 1 count.
-     * 
+     *
      *  */
-    if(field.multi)
-      if(section.multi)
-        fieldCount = _.keys(store.getState()[section.id].details[this.props.counter][field.name]).length;
-      else{
-        fieldCount = _.keys(store.getState()[section.id].details[this.props.counter][field.name]).length;
+    if (field.multi)
+      if (section.multi)
+        fieldCount = _.keys(
+          store.getState()[section.id].details[this.props.counter][field.name]
+        ).length;
+      else {
+        fieldCount = _.keys(
+          store.getState()[section.id].details[this.props.counter][field.name]
+        ).length;
       }
-
-    else{
-      fieldCount = 1
+    else {
+      fieldCount = 1;
     }
-    for(let fieldIdx =0 ; fieldIdx < fieldCount; fieldIdx++){
-      if(fieldIdx == 0 ){
+    for (let fieldIdx = 0; fieldIdx < fieldCount; fieldIdx++) {
+      if (fieldIdx == 0) {
         /***
          * Because labels of multi field should come only once.
-         * 
+         *
          */
-        fieldsComponent.push(<label htmlFor={field.name}>{field.label}</label>);
+        fieldsComponent.push(
+          <label htmlFor={field.name} key={field.name + index}>
+            {field.label}
+          </label>
+        );
       }
-      try{
+      try {
         fieldsComponent.push(
           <input
-                className={`${field.type} ${field.level} ${field.multi?'-multi':""}`}
-                id={field.name}
-                type={field.type}
-                ref={field.name}
-                data-sectioncounter={this.props.counter}
-                data-fieldcounter={fieldIdx}
-                data-category={this.props.category}
-                data-name={field.name}
-                name={field.name}
-                maxLength={field.maxLength}
-                value={
-                  field.multi
-                    ? store.getState()[section.id].details[this.props.counter][field.name][fieldIdx]
-                    : store.getState()[section.id].details[this.props.counter][field.name]
-                }
-                onChange={this.handleProfileChange.bind(this,section,field)}
+            className={`${field.type} ${field.level} ${
+              field.multi ? "-multi" : ""
+            }`}
+            id={field.name}
+            type={field.type}
+            ref={field.name}
+            data-sectioncounter={this.props.counter}
+            data-fieldcounter={fieldIdx}
+            data-category={this.props.category}
+            data-name={field.name}
+            name={field.name}
+            key={fieldIdx}
+            maxLength={field.maxLength}
+            value={
+              field.multi
+                ? store.getState()[section.id].details[this.props.counter][
+                    field.name
+                  ][fieldIdx]
+                : store.getState()[section.id].details[this.props.counter][
+                    field.name
+                  ]
+            }
+            onChange={this.handleProfileChange.bind(this, section, field)}
           />
         );
-        
-        if(fieldIdx === fieldCount-1) {
-          fieldsComponent.push(field.multi ? <span className={`${field.level}-add clicky`} onClick={this.handleAddNewFieldRow.bind(this,section,field)}>&#8853;</span> : null);
+
+        if (fieldIdx === fieldCount - 1) {
+          fieldsComponent.push(
+            field.multi ? (
+              <span
+                className={`${field.level}-add clicky`}
+                onClick={this.handleAddNewFieldRow.bind(this, section, field)}
+              >
+                &#8853;
+              </span>
+            ) : null
+          );
         }
-        
-
-    }catch(e){
-      console.log(`Caught the issue===============================`);
-      console.log(e);
-      console.log(section);
-      console.log(field);
-      console.log(this.props.counter);
-      console.log(store.getState());
-      console.log(`Caught the issue===============================`);
+      } catch (e) {
+        console.log(`Caught the issue===============================`);
+        console.log(e);
+        console.log(section);
+        console.log(field);
+        console.log(this.props.counter);
+        console.log(store.getState());
+        console.log(`Caught the issue===============================`);
+      }
     }
-    
+    return fieldsComponent;
   }
-  return fieldsComponent;
-}
-
 
   render() {
     var section = this.props.section;
@@ -180,10 +197,8 @@ export class SubSection extends React.Component {
           (store.getState()[section.id].visible ? "expanded" : "collapsed")
         }
       >
-        {_.values(section.children).map(field => (
-          <li>
-            {this.getFieldsComponent(section,field)}
-          </li>
+        {_.values(section.children).map((field, index) => (
+          <li>{this.getFieldsComponent(section, field, index)}</li>
         ))}
       </div>
     );
@@ -207,7 +222,12 @@ export class Section extends React.Component {
     var subsectionArray = [];
     for (var count = 0; count < state[section.id].count; count++) {
       subsectionArray.push(
-        <SubSection section={section} category={section.id} counter={count} />
+        <SubSection
+          section={section}
+          category={section.id}
+          counter={count}
+          key={count}
+        />
       );
     }
     console.log("printing subsection Array");
@@ -273,16 +293,110 @@ export class ProfileEditor extends React.Component {
   //   return ProfileMeta.personalInfo.children[key];
   // })
 
+  componentDidMount(){
+    console.log(`Profile Mounted`);
+  }
+  componentWillMount() {
+    console.log(`Profile is going to be Mounted`)
+    console.log(`Now Getting the profile.`);
+    const state = store.getState();
+    getProfile(JSON.stringify({email: store.getState().loginInfo.email}))
+      .then(res => {
+        if (res.status === 200) {
+          console.log(`Got the complete profile.`);
+          res.text().then(profileText => {
+            let profile = JSON.parse(profileText);
+            Object.keys(profile).map(section => {
+              store.dispatch(updateCompleteProfile(profile[section], section));
+            });
+          });
+        }
+      })
+      .catch(err => {
+        console.log(`Error while fetching the profile`);
+        console.log(err);
+      });
+  }
+
+  saveProfilehandler =() =>{
+    let profile = genProfilePayload();
+    let payload = {email : store.getState().loginInfo.email, profile };
+    saveProfile(JSON.stringify(payload)).then((response)=>{
+      if(response.status=== 200){
+         console.log(`Profile updated successfully`)
+      }else{
+        console.log(`Email not found`);
+      }
+    })
+
+  }
+
+   fileHandler = async (e) =>{
+    console.log(`Targeting avatar`);
+    console.log(e.target.files[0]);
+    
+    
+    const data = new FormData();
+    data.append('avatar',e.target.files[0]);
+
+    const res = await uploadAvatar(data);
+    if(res.status == 200){
+      console.log(`Avatar uploaded succesfully.`)
+      console.log(res);
+      let buffer = await res.arrayBuffer();
+      let imageStr = arrayBufferToBase64(buffer);
+      let base64Flag = 'data:image/jpeg;base64,';
+
+      let imageData = base64Flag + imageStr;
+      console.log(imageData);
+
+      let loginInfoState = store.getState().loginInfo;
+      
+      loginInfoState["avatar"] = imageData;
+      console.log(loginInfoState);
+      debugger;
+      store.dispatch(updateLoginInfo(loginInfoState))
+
+    }else if (res.status === 401 ){
+      this.props.history.push('/');
+    }else{
+      console.log(`Cannot upload avatar. Some error occured.`);
+    }
+  }
+
   render() {
     _.values(this.profile.children).map(section => console.log(section));
-
+    let count = 0;
     return (
       <div className="profile">
+        <div className="avatar__container">
+          { 
+            "avatar" in store.getState().loginInfo ?
+            <img src={store.getState().loginInfo["avatar"]} alt="avatar" /> :
+            <Avatar fileHandler={this.fileHandler}/>
+          }
+          
+          
+        </div>
+        
+        <div className="profile__list_container">
         <ul className="profileFlexList">
           {_.values(this.profile).map(section => (
-            <Section section={section} />
+            <Section section={section} key={count++} />
           ))}
         </ul>
+        </div>
+        <div>
+          <button
+            className="btn profile__save"
+            type="button"
+            name="save"
+            value="save"
+            onClick ={this.saveProfilehandler.bind(this)}
+          >
+            Save
+          </button>
+        </div>
       </div>
     );
   }

@@ -1,4 +1,20 @@
 {
+  "header" : {
+    "name" : "Header Details",
+    "id" : "header",
+    "multi": false,
+    "level" : "section",
+    "children" : {
+      "0" : {
+        "name": "summary",
+        "type" : "text",
+        "maxLength" : 1000,
+        "value" :  "",
+        "level" : "subsection",
+        "label" : "Summary"
+      }
+    }
+  },  
   "personalInfo": {
     "name": "Personal Info",
     "id": "personalInfo",

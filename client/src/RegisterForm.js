@@ -2,12 +2,17 @@ import React from "react";
 import "./RegisterForm.css";
 import { store } from "./state";
 import { updateLoginInfo } from "./actions";
+import {withRouter} from 'react-router-dom';
+import { registerUser, genProfilePayload } from './utils/AuthReqs';
+import { loginInfo } from "./constants/config";
 
-export class RegisterForm extends React.Component {
+class RegisterForm extends React.Component {
 
-constructor(){
-  super();
+constructor(props){
+  super(props);
+  console.log(props);
   this.handleRegister = this.handleRegister.bind(this);
+  
 }
 
   /**
@@ -17,22 +22,36 @@ constructor(){
    */
   handleLogin = e => {
     e.preventDefault();
-    store.dispatch(updateLoginInfo("SignIn"));
+    store.dispatch(updateLoginInfo({status: loginInfo.signin, email: this.refs.email.value}));
   };
 
   async handleRegister(e){
     console.log(this.refs)
-    let payload = {
+    let payload = JSON.stringify({
       email:this.refs.email.value,
-      password:this.refs.password.value
-    };
+      password:this.refs.pass.value,
+      profile : genProfilePayload()
+    });
+    console.log(`Logging In Now.`);
+    console.log(payload);
     e.preventDefault();
-    await fetch("http://localhost:9000/api/user",{
-      method: 'POST',
-      headers :[ 
-        {"Content-Type" : "application/json"},
-      ],
-      body : payload
+    e.persist()
+    registerUser(payload).then(res =>{
+      console.log('got the response.')
+      if(res.status == 200){
+        this.handleLogin(e);
+        
+        // this.props.history.push('/profile');
+      }else if(res.status === 406){
+        console.log(`User Already exists.`);
+      }else{
+        console.log(res);
+        const err = new Error(res.error);
+        throw err;
+      }
+    })
+    .catch((err)=>{
+      console.log(err);
     })
   }
 
@@ -56,7 +75,7 @@ constructor(){
                     type="text"
                     ref="email"
                     //   onFocus={this.placeholder.value=""}
-                    defaultPlaceholder="Your Email here."
+                    placeholder="Your Email here."
                   />
                 </li>
                 <li>
@@ -88,3 +107,6 @@ constructor(){
     );
   }
 }
+
+let RegisterFormRouter = withRouter(RegisterForm);
+export default RegisterFormRouter;

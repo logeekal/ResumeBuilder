@@ -3,13 +3,13 @@ import { UPDATE_LOGIN_INFO } from '../action-type';
 
 
 
-export default(state=genLoginInfo(), action) =>{
+export default(state={status:"SignIn" , email:""}, action) =>{
     switch(action.type){
         case UPDATE_LOGIN_INFO:
-            return action.payload;
+            return {...state,
+                    ...action.payload};
         default:
             return state;
 
     }
-
 }

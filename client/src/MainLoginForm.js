@@ -4,6 +4,7 @@ import './MainLoginForm.css';
 import { store } from './state';
 import { RegisterForm } from './RegisterForm';
 import { loginInfo } from './constants/config';
+import   RegisterFormRouter from './RegisterForm';
 
 
 
@@ -15,10 +16,10 @@ export class MainLoginForm extends React.Component{
 
     getProperForm(){
         const state = store.getState();
-        if(store.getState().loginInfo === loginInfo.signin){
+        if(store.getState().loginInfo.status === loginInfo.signin){
             return <LoginForm/>
-        }else if(store.getState().loginInfo == loginInfo.signup){ 
-          return  <RegisterForm/>
+        }else if(store.getState().loginInfo.status == loginInfo.signup){ 
+          return  <RegisterFormRouter/>
         } 
     }
 

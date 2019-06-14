@@ -1,13 +1,14 @@
+const corsOptions = require('../app').corsOptions;
 const User = require('../models/users').User;
 const JWT_SECRET = require('../config').JWT_SECRET;
 var express = require("express");
 const jwt = require('jsonwebtoken');
+var cors = require('cors');
 
 
 router = express.Router();
 
-
-router.get("/", function(req, res, next) {
+router.get("/", cors(corsOptions), function(req, res, next) {
     res.send(" Auth API is working perfectly.");
   });
 
@@ -41,12 +42,17 @@ router.post('/', async function(req,res,next){
                      * we will issue a JWT.
                      *  
                      * */
+                    console.log(`Now sending tokens`)
                     const payload = {email};
                     const token = jwt.sign(payload,JWT_SECRET,{
                         expiresIn:'1h'
                     });
-                    res.cookie('token', token, {httpOnly:  true}).sendStatus(200);
-                    res.send(token);
+                   
+                    
+                    res.cookie('token', token, {httpOnly : true});
+                    console.log(res);
+                    console.log("========================================================")
+                    res.send();
                 }
             })
 

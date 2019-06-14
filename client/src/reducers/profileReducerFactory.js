@@ -1,9 +1,10 @@
 import { genEducation } from "../state/genfakeData";
 import {
-  ADD_NEW_PROFILE_SUBSECTION,
-  UPDATE_CATEGORY_PROP,
-  ADD_NEW_FIELD_ROW
-} from "../action-type";
+    ADD_NEW_PROFILE_SUBSECTION,
+    UPDATE_CATEGORY_PROP,
+    ADD_NEW_FIELD_ROW,
+    UPDATE_COMPLETE_PROFILE
+} from '../action-type';
 import { LEVEL_SECTION, META_DEFS, INITIAL_STATES } from '../constants/config';
 import _ from "lodash";
 
@@ -14,6 +15,14 @@ import _ from "lodash";
 
 export function profileReducer(state, action) {
   switch (action.type) {
+    case UPDATE_COMPLETE_PROFILE:
+
+      /**
+       * this is a section where we will need to return the complete state
+       * sent by database. Client state and Databse state have been kept same.
+       */
+      return action.payload
+
     case ADD_NEW_PROFILE_SUBSECTION:
       /**
        * action Type :  ADD_NEW_PROFILE_SUBSECTION
@@ -136,7 +145,7 @@ export function profileReducer(state, action) {
 
 
 export function profileReducerFactory(reducerFunction, sentSection){
-    return (state, action) =>{
+    return (state, action) =>{        
         const {section} = action;
         const isIntialState = state === undefined;
         console.log(`Section ${sentSection}  State is : ${state}`);

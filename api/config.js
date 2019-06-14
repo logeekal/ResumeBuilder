@@ -11,9 +11,14 @@ const DB_URL = `mongodb://${DB_USER_NAME}:${DB_USER_PASS}@${DB_HOST}:${DB_PORT}`
 
 const USER_COLLECTION= 'users';
 const PROFILE_COLLECTION = 'profiles';
+const IMAGE_COLLECTION = 'user_images'
 
+const CLIENT_URL = "http://localhost:3000";
 
-module.exports = {DB_URL, DB_NAME,USER_COLLECTION,PROFILE_COLLECTION, JWT_SECRET}
+//Keywords used
+const DUPLICATE = 'DUPLICATE'
+
+module.exports = {IMAGE_COLLECTION,DB_URL, DB_NAME,USER_COLLECTION,PROFILE_COLLECTION, JWT_SECRET , CLIENT_URL, DUPLICATE}
 
 
 

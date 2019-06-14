@@ -2,7 +2,8 @@ import {
     genEducation,
     genExperience,
     genPersonalInfo,
-    genOtherDetails
+    genOtherDetails,
+    genHeader
 } from '../state/genfakeData';
 
 
@@ -13,6 +14,7 @@ export const loginInfo = {signin : "SignIn", signup:"SignUp" , loggedin:"LoggedI
 export const LEVEL_SECTION= "section";
 export const LEVEL_SUB_SECTION = "subsection";
 export const META_DEFS= {
+    HEADER : "header",
     PERSONALINFO : 'personalInfo',
     EDUCATION : 'education',
     EXPERIENCE : 'experience',
@@ -24,8 +26,10 @@ export const META_DEFS= {
 };
 
 export const INITIAL_STATES = {
+    [META_DEFS.HEADER] : genHeader(),
     [META_DEFS.EDUCATION] : genEducation(),
     [META_DEFS.EXPERIENCE] : genExperience(),
     [META_DEFS.PERSONALINFO] : genPersonalInfo(),
     [META_DEFS.OTHERDETAILS] : genOtherDetails()
+
 }

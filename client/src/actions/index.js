@@ -5,8 +5,12 @@ import {
     UPDATE_PERSONAL_INFO,
     ADD_NEW_PROFILE_SUBSECTION,
     UPDATE_CATEGORY_PROP,
-    ADD_NEW_FIELD_ROW
+    ADD_NEW_FIELD_ROW,
+    UPDATE_COMPLETE_PROFILE
 } from '../action-type';
+
+import _ from 'lodash';
+
 
 export const editField = fieldName => {
     console.log(`Dispatcing action Edit field for ${fieldName}`);
@@ -20,7 +24,13 @@ export const updateField = fieldName => {
     return {type: UPDATE_FIELD, payload:fieldName}
 }
 
+export const updateCompleteProfile = (profile,section) =>{
+    return {type : UPDATE_COMPLETE_PROFILE , payload:profile, section: section}
+
+}   
+
 export const updateLoginInfo = value => {
+    
     return {type : UPDATE_LOGIN_INFO, payload : value}
 }
 
