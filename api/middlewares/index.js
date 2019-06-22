@@ -1,5 +1,7 @@
 const JWT_SECRET = require("../config").JWT_SECRET;
 const jwt = require("jsonwebtoken");
+const sessionStore = require('../app').sessionStore;
+
 
 const withAuth = function(req, res, next) {
   console.log(`Now authentication : ${req.toString()}`);
@@ -15,16 +17,28 @@ const withAuth = function(req, res, next) {
   if (!token) {
     res.status(401).send(`Not Authorized`);
   }else{
-      jwt.verify(token,JWT_SECRET, function(err, decoded){
-        console.log(err);
-        console.log(decoded);
-          if(err){
-              res.status(401).send(`Not Authorized : ${err}`);
-          }else{
-              req.email = decoded.email;
-              next();
-          }
+    req.sessionStore.get(token, function(err, session){
+        if(err){
+          console.log(`Session not found : Unauthorized : ${token}`)
+          res.send(401)
+        }else{
+          console.log(err)
+          console.log(`Session Validated : ${token} `);
+          console.log(session);
+          req.email = session.email;
+          next();
+        }
       })
+      // jwt.verify(token,JWT_SECRET, function(err, decoded){
+      //   console.log(err);
+      //   console.log(decoded);
+      //     if(err){
+      //         res.status(401).send(`Not Authorized : ${err}`);
+      //     }else{
+      //         req.email = decoded.email;
+      //         next();
+      //     }
+      // })
   }
 };
 

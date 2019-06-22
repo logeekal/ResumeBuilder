@@ -1,3 +1,6 @@
+const redisOpts = require('./utils/SessionStoreDB').redisOpts;
+const RedisClient = require('./utils/SessionStoreDB').RedisClient;
+const JWT_SECRET = require('./config').JWT_SECRET;
 const CLIENT_URL = require('./config').CLIENT_URL;
 const withAuth = require('./middlewares').withAuth;
 const  { DBConnection } =  require('./utils/DBConnection')
@@ -13,6 +16,9 @@ var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api');
 var authRouter = require('./routes/auth');
 var uploadRoute = require('./routes/uploads');
+var session = require('express-session');
+
+var redisStore =  require('connect-redis')(session);
 
 var webpack = require('webpack');
 var webpackConfig  = require('./webpack.config');
@@ -25,6 +31,21 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 
+
+const sessionOpts = {
+  secret : JWT_SECRET,
+  cookie :{
+    maxAge : 3600000,
+    httpOnly :  false
+  },
+  name: "token",
+  resave : false,
+  saveUinitialized : false,
+  store : new redisStore(redisOpts)
+}
+
+
+
 const  corsOptions = {
   origin: [CLIENT_URL, 'http://localhost:3000/', 'http:localhost:9000'],
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -34,6 +55,7 @@ const  corsOptions = {
 }
 
 app.use(logger('dev'));
+app.use(session(sessionOpts));
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true, publicPath: webpackConfig.output.publicPath
@@ -77,5 +99,6 @@ app.use(function(err, req, res, next) {
 });
 
 DBConnection.connect();
+
 
 module.exports = {app,corsOptions};

@@ -30,6 +30,16 @@ services:
       - mongo:mongo
     depends_on: 
       - mongo
-    
+
+  session-redis:
+    image: redis
+    restart: always
+    ports: 
+      - 6379:6379
+    volumes:
+      - "redisSessionData:/data"
+    entrypoint: redis-server --appendonly yes --requirepass R3D1SP@ssword
+
 volumes:
   mongoData:
+  redisSessionData:

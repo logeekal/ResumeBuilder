@@ -15,6 +15,13 @@ router.get("/", cors(corsOptions), function(req, res, next) {
 
 router.post('/', async function(req,res,next){
     const {email, password} = req.body;
+    const token =
+    req.body.token ||
+    req.query.token ||
+    req.headers["x-access-token"] ||
+    req.cookies.token;
+
+
     User.findOne({email}, function(error, user){
         if(error){
             console.log(`Cannot find user ${err}`);
@@ -42,14 +49,36 @@ router.post('/', async function(req,res,next){
                      * we will issue a JWT.
                      *  
                      * */
+
+                  
+
+
                     console.log(`Now sending tokens`)
-                    const payload = {email};
-                    const token = jwt.sign(payload,JWT_SECRET,{
-                        expiresIn:'1h'
-                    });
+                    req.session.email = email;
+                    req.session.save(function(err){
+                        if(err !== false && err !== null && err !== undefined){console.log(`Error Saving session`);
+                        console.log(err)}
+                        else{
+                            console.log(`Session saved correctly. ${req.session.id}`)
+                            console.log(req.session)
+                        }
+                    })
+                
+                    req.sessionStore.set(token,req.session, function(err){
+                        if(err){
+                            console.log(`Error in setting the session in DB ${err}`);
+                        }else{
+                            console.log('Session stored. ');
+                        }
+                    })
+                    //Replace JWT with Sessions.
+                    // const payload = {email};
+                    // const token = jwt.sign(payload,JWT_SECRET,{
+                    //     expiresIn:'1h'
+                    // });
                    
                     
-                    res.cookie('token', token, {httpOnly : true});
+                    //res.cookie('token', req.session.id , {httpOnly : true});
                     console.log(res);
                     console.log("========================================================")
                     res.send();
