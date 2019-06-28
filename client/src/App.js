@@ -11,10 +11,15 @@ import { Home } from './Home';
 import { LoginForm } from './LoginForm';
 import './RegisterForm.css';
 import  RegisterFormRouter  from './RegisterForm';
+
 import { SideNav } from './SideNav';
 import { ProfileEditor } from './ProfileEditor';
-import {withRouter} from 'react-router-dom';
+
 import ProtectedRoute from './components/ProtectedRoute';
+import './components/FloatingMenu.css';
+import { FloatingMenu } from './components/FloatingMenu';
+import FloatMenuWrapperWithRoute from './components/FloatMenuWrapper';
+
 
 
 class App extends Component {
@@ -58,9 +63,9 @@ class App extends Component {
 
           {/*Custom Code Starts*/}
           <div>
-            
+            <FloatMenuWrapperWithRoute />
             <Route path="/profile" render={()=><ProtectedRoute ComponentToProtect={ProfileEditor} redirectTo="/" />} /> 
-            
+            <Route path="/nav" component= {FloatMenuWrapperWithRoute} />
             <Route exact path="/" component={Home}/> 
             <Route exact path="/login" component={LoginForm}/>
             <Route exact path="/register" component={RegisterFormRouter}/>

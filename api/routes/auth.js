@@ -90,4 +90,29 @@ router.post('/', async function(req,res,next){
 
 });
 
+
+router.post('/logout', function(req, res, next){
+    console.log('In logout Now.');
+    const token = req.body.token ||
+    req.query.token ||
+    req.headers["x-access-token"] ||
+    req.cookies.token;  
+
+    req.sessionStore.get(token, function(err, session){
+        if(!session){
+            console.log('Session Not found anyways');
+            res.sendStatus(200);
+        }else{
+            console.log(`Session found with SID : ${token}. Now destroying it.`);
+            req.sessionStore.destroy(token, function(err){
+                if(err !== undefined || err !== null || err != false)
+                console.log(`Error destorying session`);
+                console.log('Session destroyed successfully.');
+                res.sendStatus(200);
+            })
+        }
+    })
+
+});
+
 module.exports = router ;

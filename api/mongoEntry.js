@@ -1,8 +1,11 @@
-db = db.getSiblingDB('resumeDb');
+db = db.getSiblingDB('resumebuilder');
+db.createCollection("users")
 db.createUser({
-    user : "resume",
-    password :  "resume",
+    user : "resumeadmin",
+    pwd :  "resume@admin@password",
     roles : [
-        {role : "dbOwner", db:"resumeDb"}
+        {role : "dbOwner", db:"resumebuilder"}
     ]
 });
+
+

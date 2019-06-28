@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+
+.floating-menu{
+    position: absolute;
+    right: 5rem;
+	top: 5rem;
+    height: 42px;
+    text-align: right;
+    
+}
+
+
+
+.floating-menu-item{
+    padding : 1rem
+}
+.floating-menu-label{
+    display: none;
+}
+
+.floating-menu-icon-container{
+    background-color: rgb(248, 61, 186);
+    height: 4rem;
+    width: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%  ;
+    cursor: pointer; 
+}
+
+.floating-menu-icon-container:active{
+    transform: rotate(45deg);
+    transition: 0s
+}

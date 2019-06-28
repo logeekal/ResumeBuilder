@@ -21,12 +21,14 @@ const withAuth = function(req, res, next) {
         if(err){
           console.log(`Session not found : Unauthorized : ${token}`)
           res.send(401)
-        }else{
+        }else if (session !== undefined && session !== null){
           console.log(err)
           console.log(`Session Validated : ${token} `);
           console.log(session);
           req.email = session.email;
           next();
+        }else{
+          res.send(401);
         }
       })
       // jwt.verify(token,JWT_SECRET, function(err, decoded){

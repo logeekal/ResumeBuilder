@@ -2,7 +2,8 @@ const withAuth = require('../middlewares').withAuth;
 const resolveMongoError = require('../utils/MongoosErrorHandler').resolveMongoError;
 const { addUser, getUser } = require("../utils/DButils");
 const { User } = require("../models/users");
-
+const path = require('path');
+const fs = require('fs');
 
 express = require("express");
 
@@ -109,6 +110,24 @@ router.post("/users/profile/update", withAuth, async(req, res, next)=>{
     res.sendStatus(404);h
   }
 
+})
+
+
+router.get("/users/profile/avatar/get", withAuth, async(req, res, next)=>{
+  const email = req.email;
+  const {avatar} = await User.findOne({email: email},{avatar:1});
+  
+  const avatarFilePath = path.join(__dirname,avatar);
+  console.log(avatarFilePath);
+  if(fs.existsSync(avatarFilePath)){
+    res.status(200);
+    res.sendFile(avatarFilePath)
+  }else{
+    res.status(406);
+    res.send(`No avatar Loaded.`);
+  }
+  
+  
 })
 
 module.exports = router;

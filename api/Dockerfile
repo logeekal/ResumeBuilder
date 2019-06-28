@@ -1,10 +1,8 @@
 FROM mongo
 
-RUN echo "I am runing" && \
-    mkdir ./root
+MAINTAINER <logeekal> jtn.kathuria@gmail.com
 
-COPY ./mongoEntry.js ./root/
+COPY ./mongoEntry.js /
 
-WORKDIR ./root
-
-RUN ./root
+#Now creating user  for development environment
+#CMD [ " mongod --fork --logpath /var/log/mongodb.log &&  sleep 5 && mongo ./mongoEntry.js" ]

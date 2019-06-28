@@ -41,7 +41,7 @@ router.post('/avatar', withAuth,async (req, res, next)=>{
         console.log('In form On event');
         if(field === 'avatar'){
             let newFileName = _id;
-            avatarPath =  form.uploadDir + "/" + newFileName  + path.extname(file.path);
+            avatarPath =  path.join(form.uploadDir , newFileName  + path.extname(file.path));
             fs.renameSync(file.path, avatarPath);
             // let image = {
             //     userId :  _id,
@@ -63,6 +63,7 @@ router.post('/avatar', withAuth,async (req, res, next)=>{
 
     form.on('end',async ()=>{
         console.log(`Now updating avatar path in `)
+        console.log(avatarPath);
         let absoluteAvatarPath = path.join(avatarPath);
         let relativeAvatarPath =  path.relative(__dirname, absoluteAvatarPath);
         console.log(relativeAvatarPath);

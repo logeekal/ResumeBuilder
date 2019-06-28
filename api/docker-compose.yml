@@ -1,9 +1,8 @@
 version: '3'
 services:
-
   mongo:
     image: mongo
-    restart: always
+    restart: unless-stopped
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -15,11 +14,9 @@ services:
     volumes:
       - "./mongoEntry.js:/docker-entrypoint-initdb.d/mongoEntry.js:ro"
       - "mongoData:/data/db"
-
-
   mongo-express:
     image: mongo-express
-    restart: always
+    restart: unless-stopped
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: "admin"
       ME_CONFIG_MONGODB_ADMINPASSWORD: "password"
@@ -33,11 +30,11 @@ services:
 
   session-redis:
     image: redis
-    restart: always
+    restart: unless-stopped
     ports: 
       - 6379:6379
     volumes:
-      - "redisSessionData:/data"
+      - "./session:/data"
     entrypoint: redis-server --appendonly yes --requirepass R3D1SP@ssword
 
 volumes:
