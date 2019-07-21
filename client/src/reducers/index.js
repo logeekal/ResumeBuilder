@@ -16,6 +16,7 @@ export default combineReducers({
     fields,
     loginInfo,
     [META_DEFS.PERSONALINFO] : profileReducerFactory(profileReducer, META_DEFS.PERSONALINFO),
+    [META_DEFS.SOCIAL] : profileReducerFactory(profileReducer, META_DEFS.SOCIAL),
     [META_DEFS.EDUCATION] : profileReducerFactory(profileReducer, META_DEFS.EDUCATION),
     [META_DEFS.EXPERIENCE] : profileReducerFactory(profileReducer, META_DEFS.EXPERIENCE),
     [META_DEFS.OTHERDETAILS] : profileReducerFactory(profileReducer, META_DEFS.OTHERDETAILS),

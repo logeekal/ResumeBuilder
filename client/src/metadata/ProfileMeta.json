@@ -7,14 +7,50 @@
     "children" : {
       "0" : {
         "name": "summary",
-        "type" : "text",
+        "type" : "textarea",
         "maxLength" : 1000,
         "value" :  "",
         "level" : "subsection",
         "label" : "Summary"
       }
     }
-  },  
+  },
+  "social" : {
+    "name" :"Social",
+    "id"  : "social",
+    "multi" : false,
+    "level" : "section",
+    "children" : {
+      "0" : {
+        "label" : "Github",
+        "name" : "github",
+        "type" : "url",
+        "maxLength" : 100,
+        "icon" : true
+      },
+      "1" : {
+        "label" : "Stack overflow",
+        "name" : "so",
+        "type" : "url",
+        "maxLength" : 100,
+        "icon" : true
+      },
+      "2" : {
+        "label" : "LinkedIn",
+        "name":"linkedin",
+        "type" : "url",
+        "maxLength" : 100,
+        "icon" : true
+      },
+      "3" : {
+        "label" : "website",
+        "name"  :"website",
+        "type" : "url",
+        "maxLength" : 100,
+        "icon" : true
+      }
+    }
+  },
   "personalInfo": {
     "name": "Personal Info",
     "id": "personalInfo",

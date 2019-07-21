@@ -1,36 +1,24 @@
+/**@jsx jsx */
+
 import React from "react";
-import "./ProfileEditor.css";
+
 import { store } from "./state";
-import {
-  handlePersonalInfo,
-  addNewProfileSubsection,
-  updateCategoryProp,
-  addNewFieldRow,
-  updateCompleteProfile,
-  updateLoginInfo
-} from "./actions";
+import { updateCompleteProfile, updateLoginInfo } from "./actions";
 import _ from "lodash";
 import ProfileMeta from "./metadata/ProfileMeta.json";
-import "./ProfileEditor.css";
+
 import {
   getProfile,
   genProfilePayload,
   saveProfile,
   uploadAvatar,
-  getAvatar
+  getAvatar,
+  refreshProfile
 } from "./utils/AuthReqs";
-import { UPDATE_CATEGORY_PROP } from "./action-type";
 import Avatar from "./components/Avatar";
-import {
-  arrayBufferToBase64,
-  arrayBufferToBase64Wrapper
-} from "./utils/utility";
-import { Section } from './components/Section';
-
-
-
-
-
+import { arrayBufferToBase64Wrapper } from "./utils/utility";
+import { Section } from "./components/Section";
+import { css, jsx } from "@emotion/core";
 
 export class ProfileEditor extends React.Component {
   constructor() {
@@ -39,63 +27,78 @@ export class ProfileEditor extends React.Component {
     this.profile = ProfileMeta;
   }
 
-  // _.keys(this.profile.children).map(key =>{
-  //   return ProfileMeta.personalInfo.children[key];
-  // })
+  profileEditorCSS = css`
+    display: flex;
+    flex-direction: row;
+  
+    .profile ul {
+      display: flex;
+      width: 100%;
 
-  componentDidMount() {
-    console.log(`Profile Mounted`);
-  }
-
-  async handleAvatarUpdate(response) {
-    console.log(`Handling avatar update`);
-    console.log();
-    let buffer;
-    if(response instanceof XMLHttpRequest){
-      buffer = response.response;
-    }else{
-      buffer = await response.arrayBuffer();
+      justify-items: center;
+      flex-direction: column;
     }
-    
-    let imageData = arrayBufferToBase64Wrapper(buffer);
-    console.log(imageData);
-    let loginInfoState = store.getState().loginInfo;
 
-    loginInfoState["avatar"] = imageData;
-    console.log(loginInfoState);
-    store.dispatch(updateLoginInfo(loginInfoState));
-  }
+    hr.sectiondivider {
+      margin-top: 40px;
+      height: 2px;
+      border: 0;
+      box-shadow: 0 10px 10px -10px #8c8b8b inset;
+    }
+
+    .headers {
+      cursor: pointer;
+      background-color: rgb(214, 210, 210);
+      align-content: flex-start;
+    }
+
+    .headers:hover {
+      cursor: pointer;
+      background-color: rgb(151, 148, 148);
+    }
+
+    .subsection {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .subsection.expanded {
+      transition: 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+
+    .field-container {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .field-container label {
+      width: 20rem;
+      text-align: left;
+    }
+
+    input.subsection {
+      line-height: 2rem;
+      width: 100%;
+      background: none;
+      border: transparent;
+      border-radius: 3px;
+      box-shadow: 0.2px 0.2px 2px 1px #00000073;
+    }
+
+    .subsection.collapsed {
+      display: none;
+    }
+  `;
+
+
 
   componentWillMount() {
     console.log(`Profile is going to be Mounted`);
-    console.log(`Now Getting the profile.`);
-    const state = store.getState();
-    getProfile(JSON.stringify({ email: store.getState().loginInfo.email }))
-      .then(res => {
-        if (res.status === 200) {
-          console.log(`Got the complete profile.`);
-          res.text().then(profileText => {
-            let profile = JSON.parse(profileText);
-            console.log(profile);
-            Object.keys(profile).map(section => {
-              store.dispatch(updateCompleteProfile(profile[section], section));
-            });
-
-            //Now getting the avatar
-            getAvatar().then(avatar => {
-              if (avatar.status == 200) {
-                console.log(`Got the Avatar`);
-                this.handleAvatarUpdate(avatar).then();
-              } else {
-              }
-            });
-          });
-        }
-      })
-      .catch(err => {
-        console.log(`Error while fetching the profile`);
-        console.log(err);
-      });
+    refreshProfile();
   }
 
   saveProfilehandler = () => {
@@ -122,13 +125,13 @@ export class ProfileEditor extends React.Component {
       console.log(res);
 
       if (res.status == 200) {
-        debugger
+        debugger;
         console.log(`Avatar uploaded succesfully.`);
         console.log(res);
         this.handleAvatarUpdate(res).then();
       } else {
         console.log(`Error in upload avatar promise`);
-        console.log(res.status)
+        console.log(res.status);
         if (res.status === 401) {
           this.props.history.push("/");
         } else {
@@ -142,7 +145,7 @@ export class ProfileEditor extends React.Component {
     _.values(this.profile.children).map(section => console.log(section));
     let count = 0;
     return (
-      <div className="profile">
+      <div className="profile" css={this.profileEditorCSS}>
         <div className="avatar__container">
           {/* {"avatar" in store.getState().loginInfo ? (
             <img src={store.getState().loginInfo["avatar"]} alt="avatar" />

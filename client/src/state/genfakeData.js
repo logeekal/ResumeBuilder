@@ -135,6 +135,27 @@ export function genOtherDetails(){
 }
 
 
+export function genSocial(){
+    var expMeta = ProfileMeta.social;
+    var result ={};
+    var details = {};
+    var detailObject = {};
+    var fieldValList = {"0":''};
+    _.values(expMeta.children).map((field, index) => {
+        if(field.multi){
+            detailObject[field.name]= fieldValList;
+        }else{
+        detailObject[field.name] ="";
+        }
+    })
+    details[0] = detailObject;
+    result.count = 1;
+    result.details= details;
+    result.visible= true;
+    return result;
+}
+
+
 export function genHeader(){
     var expMeta = ProfileMeta.header;
     var result ={};

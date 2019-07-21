@@ -1,8 +1,11 @@
+/** @jsx jsx */
+
 import React from 'react';
 import { store } from '../state';
 import { updateCategoryProp, addNewProfileSubsection } from '../actions';
 import _ from 'lodash'
 import { Field } from './Field';
+import {css, jsx} from '@emotion/core'
 
 
 
@@ -51,7 +54,6 @@ export class AddControl extends React.Component {
 }
 
 
-
 /**
  *
  * What is a Subsection?
@@ -88,7 +90,7 @@ export class AddControl extends React.Component {
       >
         {_.values(section.children).map((field, index) => (
           // <li>{this.getFieldsComponent(section, field, index)}</li>
-          <Field section={section} field={field} index ={index} category={this.props.category}  counter = {this.props.counter} />
+          <Field section={section} index ={index} counter = {this.props.counter} />
         ))}
       </div>
     );
@@ -99,12 +101,6 @@ export class Section extends React.Component {
   constructor(props) {
     super(props);
   }
-
-  // addNewCaption(){
-  //   if (section.multi) {
-  //     return <h4 className="add-caption">`Add new ${section.name}`</h4>
-  //   }
-  // }
 
   getAllSubsections(section) {
     var state = store.getState();
@@ -156,7 +152,7 @@ export class Section extends React.Component {
     var section = this.props.section;
     var state = store.getState();
     return (
-      <div className="sectionparent" ref={section.id}>
+      <div className="sectionparent" css={this.props.css} ref={section.id}>
         <hr className="sectiondivider" />
         <h2
           className="headers"
@@ -170,4 +166,9 @@ export class Section extends React.Component {
       </div>
     );
   }
+}
+
+
+Section.defaultProps = {
+  css : css``
 }

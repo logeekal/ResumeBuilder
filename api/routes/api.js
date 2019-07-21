@@ -102,6 +102,8 @@ router.post("/users/profile/get", withAuth, async(req, res, next)=>{
 router.post("/users/profile/update", withAuth, async(req, res, next)=>{
   const email = req.body.email;
   const profile = req.body.profile;
+  console.log('Saving profile : ');
+  console.log(profile)
   const result = await User.updateOne({email:email}, {profile:profile},{upsert:false});
   console.log(`${result.nModified} documents were updated`);
   if(result.nModified > 0){

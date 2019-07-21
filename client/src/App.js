@@ -1,3 +1,5 @@
+/**@jsx jsx */
+
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
@@ -11,7 +13,9 @@ import { Home } from './Home';
 import { LoginForm } from './LoginForm';
 import './RegisterForm.css';
 import  RegisterFormRouter  from './RegisterForm';
+import {jsx} from '@emotion/core'
 
+ 
 import { SideNav } from './SideNav';
 import { ProfileEditor } from './ProfileEditor';
 
@@ -19,6 +23,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import './components/FloatingMenu.css';
 import { FloatingMenu } from './components/FloatingMenu';
 import FloatMenuWrapperWithRoute from './components/FloatMenuWrapper';
+import { Bono } from './templates/bono';
+import { NavWitRoute } from './components/Nav';
 
 
 
@@ -62,6 +68,7 @@ class App extends Component {
           </header> */}
 
           {/*Custom Code Starts*/}
+          <NavWitRoute/>
           <div>
             <FloatMenuWrapperWithRoute />
             <Route path="/profile" render={()=><ProtectedRoute ComponentToProtect={ProfileEditor} redirectTo="/" />} /> 
@@ -71,6 +78,8 @@ class App extends Component {
             <Route exact path="/register" component={RegisterFormRouter}/>
             <Route exact path='/home' component={MainPage}/>
             <Route exact path='/side' component={SideNav}/>
+            {console.log(store.getState())}
+            <Route exact path='/bono' render={()=><ProtectedRoute ComponentToProtect={Bono} redirectTo="/" />} /> 
             {/* <Route exact path='/profile' component={ProfileEditor}/> */}
 
           </div>

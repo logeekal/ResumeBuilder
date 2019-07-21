@@ -8,7 +8,8 @@ import {
     LOGOUT_URL
 } from '../constants';
 import { store } from "../state";
-import { updateLoginInfo } from "../actions";
+import { updateLoginInfo, updateCompleteProfile } from "../actions";
+import { arrayBufferToBase64Wrapper } from './utility';
 
 export const registerUser = payload => {
   let bodyPayload = JSON.stringify(payload);
@@ -114,4 +115,56 @@ export const getAvatar = async () => {
 
 export const logout = async(payload) =>{
   return fetch(LOGOUT_URL, POST_PARAMS_WITH_CRED(payload));
+}
+
+
+export const refreshProfile = () => {
+  console.log(`Now Getting the profile.`);
+getProfile(JSON.stringify({ email: store.getState().loginInfo.email }))
+  .then(res => {
+    if (res.status === 200) {
+      console.log(`Got the complete profile.`);
+      res.text().then(profileText => {
+        let profile = JSON.parse(profileText);
+        console.log(profile);
+        Object.keys(profile).map(section => {
+          store.dispatch(updateCompleteProfile(profile[section], section));
+        });
+
+        //Now getting the avatar
+        getAvatar().then(avatar => {
+          if (avatar.status == 200) {
+            console.log(`Got the Avatar`);
+            handleAvatarUpdate(avatar).then();
+          } else {
+          }
+        });
+      });
+    }
+  })
+  .catch(err => {
+    console.log(`Error while fetching the profile`);
+    console.log(err);
+  });
+};
+
+
+
+export const  handleAvatarUpdate = async (response) => {
+  console.log(`Handling avatar update`);
+  console.log();
+  let buffer;
+  if (response instanceof XMLHttpRequest) {
+    buffer = response.response;
+  } else {
+    buffer = await response.arrayBuffer();
+  }
+
+  let imageData = arrayBufferToBase64Wrapper(buffer);
+  console.log(imageData);
+  let loginInfoState = store.getState().loginInfo;
+
+  loginInfoState["avatar"] = imageData;
+  console.log(loginInfoState);
+  store.dispatch(updateLoginInfo(loginInfoState));
 }

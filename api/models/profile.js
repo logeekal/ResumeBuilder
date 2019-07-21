@@ -150,7 +150,8 @@ const ProfileSchema  = new mongoose.Schema({
   header : genericSchema,
   education : genericSchema,
   experience :  genericSchema,
-  otherDetails : genericSchema
+  otherDetails : genericSchema,
+  social : genericSchema
 });
 
 

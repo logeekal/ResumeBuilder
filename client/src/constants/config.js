@@ -3,7 +3,8 @@ import {
     genExperience,
     genPersonalInfo,
     genOtherDetails,
-    genHeader
+    genHeader,
+    genSocial
 } from '../state/genfakeData';
 
 
@@ -16,6 +17,7 @@ export const LEVEL_SUB_SECTION = "subsection";
 export const META_DEFS= {
     HEADER : "header",
     PERSONALINFO : 'personalInfo',
+    SOCIAL  : 'social',
     EDUCATION : 'education',
     EXPERIENCE : 'experience',
     OTHERDETAILS : "otherDetails",
@@ -30,6 +32,11 @@ export const INITIAL_STATES = {
     [META_DEFS.EDUCATION] : genEducation(),
     [META_DEFS.EXPERIENCE] : genExperience(),
     [META_DEFS.PERSONALINFO] : genPersonalInfo(),
-    [META_DEFS.OTHERDETAILS] : genOtherDetails()
+    [META_DEFS.OTHERDETAILS] : genOtherDetails(),
+    [META_DEFS.SOCIAL] : genSocial()
+}
 
+
+export const templates = {
+    bono : "../templates/bono.jsx"
 }
